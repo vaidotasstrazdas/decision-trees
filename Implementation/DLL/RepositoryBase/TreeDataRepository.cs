@@ -1,21 +1,31 @@
-﻿using System.Collections.Generic;
+﻿#region Usings
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
+
 using Bridge.IDLL.Exceptions;
 using Bridge.IDLL.Interfaces;
+#endregion
 
 namespace Implementation.DLL.RepositoryBase
 {
     public class TreeDataRepository<TRecord> : ITreeDataRepository<TRecord>
     {
 
+        #region Private Fields
         private string _namesFilePath;
         private string _dataFilePath;
+        #endregion
 
+        #region Public Fields
         public string CollectionName { get; set; }
         public string Path { get; set; }
         public string NamesFileContents { get; set; }
+        #endregion
 
+        #region Implemented Interfaces
+
+        #region ITreeDataRepository
         public void SaveData(IEnumerable<TRecord> records)
         {
             PrepareDataSpace();
@@ -39,7 +49,11 @@ namespace Implementation.DLL.RepositoryBase
 
             File.WriteAllBytes(_dataFilePath, Encoding.UTF8.GetBytes(builder.ToString()));
         }
+        #endregion
 
+        #endregion
+
+        #region Methods
         private void PrepareDataSpace()
         {
 
@@ -67,6 +81,7 @@ namespace Implementation.DLL.RepositoryBase
             _dataFilePath = Path + "/" + CollectionName + ".data";
 
         }
+        #endregion
 
     }
 }

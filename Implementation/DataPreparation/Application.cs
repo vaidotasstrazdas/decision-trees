@@ -1,8 +1,11 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.Collections.Generic;
 using System.Configuration;
+
 using Bridge.IBLL.Data;
 using Bridge.IBLL.Interfaces;
+#endregion
 
 namespace Implementation.DataPreparation
 {
@@ -22,7 +25,7 @@ namespace Implementation.DataPreparation
             Console.WriteLine("CSV read successfully.");
             Console.WriteLine("Preparing CSV data.");
 
-            List<YahooNormalized> normalizedData = _yahooService.PrepareData();
+            IEnumerable<YahooNormalized> normalizedData = _yahooService.PrepareData();
             Console.WriteLine("Date,Close,Volatility");
             foreach (var dataRecord in normalizedData)
             {

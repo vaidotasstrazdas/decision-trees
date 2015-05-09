@@ -1,10 +1,13 @@
-﻿using Autofac;
+﻿#region Usings
+using Autofac;
+
+using Bridge.IBLL.Data;
 using Bridge.IBLL.Interfaces;
 using Bridge.IDLL.Data;
 using Bridge.IDLL.Interfaces;
 using Implementation.BLL;
-using Implementation.DLL;
 using Implementation.DLL.RepositoryBase;
+#endregion
 
 namespace Bridge.Infrastructure
 {
@@ -20,6 +23,10 @@ namespace Bridge.Infrastructure
             Builder
                 .RegisterType<YahooService>()
                 .As<IYahooService>();
+
+            Builder
+                .RegisterType<TreeDataRepository<YahooNormalized>>()
+                .As<ITreeDataRepository<YahooNormalized>>();
 
             Builder
                 .RegisterType<CsvDataRepository<YahooRecord>>()

@@ -1,17 +1,21 @@
-﻿using System.Collections.Generic;
+﻿#region Usings
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using Bridge.IDLL.Exceptions;
 using Implementation.DLL.RepositoryBase;
 using Tests.DLLTest.Models;
+#endregion
 
 namespace Tests.DLLTest.RepositoryBase
 {
     [TestClass]
     public class TreeDataRepositoryTests
     {
+
         #region Private Fields
         private TreeDataRepository<FakeDataModel> _repository;
         private List<FakeDataModel> _records;

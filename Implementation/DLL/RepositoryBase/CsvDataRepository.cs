@@ -1,18 +1,27 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
 using Bridge.IDLL.Exceptions;
 using Bridge.IDLL.Interfaces;
 using Microsoft.VisualBasic.FileIO;
+#endregion
 
 namespace Implementation.DLL.RepositoryBase
 {
     public class CsvDataRepository<TRecord> : ICsvDataRepository<TRecord>
     {
+
+        #region Private Fields
         public List<List<string>> CsvLines { get; set; }
         public List<TRecord> CsvLinesNormalized { get; set; }
+        #endregion
 
+        #region Implemented Interfaces
+
+        #region ICsvDataRepository
         public void LoadData(string dataFile)
         {
             if (string.IsNullOrEmpty(dataFile))
@@ -65,9 +74,12 @@ namespace Implementation.DLL.RepositoryBase
                 }
                 CsvLinesNormalized.Add(recordObject);
             }
-            
+
 
         }
+        #endregion
+
+        #endregion
 
     }
 }

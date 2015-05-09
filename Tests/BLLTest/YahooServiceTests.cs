@@ -1,12 +1,17 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Bridge.IBLL.Data;
 using Bridge.IBLL.Exceptions;
 using Bridge.IDLL.Data;
 using Bridge.IDLL.Exceptions;
 using Bridge.IDLL.Interfaces;
 using Implementation.BLL;
+using Implementation.BLL.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+#endregion
 
 namespace Tests.BLLTest
 {
@@ -16,7 +21,9 @@ namespace Tests.BLLTest
 
         #region Private Fields
         private Mock<ICsvDataRepository<YahooRecord>> _yahooDataRepositoryMock;
+        private Mock<ITreeDataRepository<YahooTreeData>> _yahooTreeDataRepositoryMock;
         private YahooService _service;
+
         #endregion
 
         #region TestInitialize
@@ -24,6 +31,7 @@ namespace Tests.BLLTest
         public void TestInitialize()
         {
             _yahooDataRepositoryMock = new Mock<ICsvDataRepository<YahooRecord>>();
+            _yahooTreeDataRepositoryMock = new Mock<ITreeDataRepository<YahooTreeData>>();
 
             _yahooDataRepositoryMock
                 .Setup(x => x.LoadData("test"));
@@ -41,7 +49,10 @@ namespace Tests.BLLTest
                     }
                 );
 
-            _service = new YahooService(_yahooDataRepositoryMock.Object);
+            _service = new YahooService(
+                _yahooDataRepositoryMock.Object,
+                _yahooTreeDataRepositoryMock.Object
+            );
         }
         #endregion
 
@@ -87,7 +98,7 @@ namespace Tests.BLLTest
         [TestMethod]
         public void PrepareData_ShouldGetCorrectResultsCount()
         {
-            var data = _service.PrepareData();
+            var data = _service.PrepareData().ToList();
 
             Assert.AreEqual(5, data.Count);
         }
@@ -97,7 +108,7 @@ namespace Tests.BLLTest
         [TestMethod]
         public void PrepareData_ShouldReverseListOrder()
         {
-            var data = _service.PrepareData();
+            var data = _service.PrepareData().ToList();
 
             Assert.AreEqual(2.47654, data[0].Close);
             Assert.AreEqual(2.34231, data[1].Close);
@@ -111,7 +122,7 @@ namespace Tests.BLLTest
         [TestMethod]
         public void PrepareData_FirstVolatilityMustBeZero()
         {
-            var data = _service.PrepareData();
+            var data = _service.PrepareData().ToList();
 
             Assert.AreEqual(0.0, data[0].Volatility);
         }
@@ -121,7 +132,7 @@ namespace Tests.BLLTest
         [TestMethod]
         public void PrepareData_ShouldCalculateCorrectOtherVolatilities()
         {
-            var data = _service.PrepareData();
+            var data = _service.PrepareData().ToList();
 
             Assert.AreEqual(0.067115, data[1].Volatility);
             Assert.AreEqual(0.311068041, data[2].Volatility);
@@ -132,6 +143,33 @@ namespace Tests.BLLTest
 
         #endregion
 
+        #region SaveYahooData Tests
+
+        #region SaveYahooData_ShouldSetYahooTreeMetaData
+        [TestMethod]
+        public void SaveYahooData_ShouldSetYahooTreeMetaData()
+        {
+            _service.SaveYahooData(new List<YahooNormalized>(), "testPath");
+
+            _yahooTreeDataRepositoryMock.VerifySet(x => x.CollectionName = "Yahoo", Times.Once);
+            _yahooTreeDataRepositoryMock.VerifySet(x => x.Path = "testPath", Times.Once);
+            _yahooTreeDataRepositoryMock.VerifySet(x => x.NamesFileContents = YahooHelper.BuildYahooNamesFile(), Times.Once);
+        }
         #endregion
+
+        #region SaveYahooData_ShouldCallSaveData
+        [TestMethod]
+        public void SaveYahooData_ShouldCallSaveData()
+        {
+            _service.SaveYahooData(new List<YahooNormalized>(), "testPath");
+
+            _yahooTreeDataRepositoryMock.Verify(x => x.SaveData(It.IsAny<IEnumerable<YahooTreeData>>()), Times.Once);
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
     }
 }

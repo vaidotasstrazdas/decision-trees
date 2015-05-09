@@ -1,24 +1,39 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Bridge.IBLL.Data;
 using Bridge.IBLL.Exceptions;
 using Bridge.IBLL.Interfaces;
 using Bridge.IDLL.Data;
 using Bridge.IDLL.Exceptions;
 using Bridge.IDLL.Interfaces;
+using Implementation.BLL.Helpers;
+#endregion
 
 namespace Implementation.BLL
 {
     public class YahooService : IYahooService
     {
+        #region Private Fields
         private readonly ICsvDataRepository<YahooRecord> _yahooDataRepository;
+        private readonly ITreeDataRepository<YahooTreeData> _yahooTreeDataRepository;
+        #endregion
 
-        public YahooService(ICsvDataRepository<YahooRecord> yahooDataRepository)
+        #region Constructors and Destructors
+        public YahooService(
+            ICsvDataRepository<YahooRecord> yahooDataRepository,
+            ITreeDataRepository<YahooTreeData> yahooTreeDataRepository)
         {
             _yahooDataRepository = yahooDataRepository;
+            _yahooTreeDataRepository = yahooTreeDataRepository;
         }
+        #endregion
 
+        #region Implemented Interfaces
+
+        #region IYahooService
         public void ReadCsv(string filePath)
         {
             try
@@ -36,7 +51,7 @@ namespace Implementation.BLL
             }
         }
 
-        public List<YahooNormalized> PrepareData()
+        public IEnumerable<YahooNormalized> PrepareData()
         {
             var yahooRecords = Enumerable.Reverse(_yahooDataRepository.CsvLinesNormalized).ToList();
             var data = new List<YahooNormalized>();
@@ -71,6 +86,20 @@ namespace Implementation.BLL
 
             return data;
         }
+
+        public void SaveYahooData(IList<YahooNormalized> yahooRecords, string path)
+        {
+            var yahooTreeData = YahooHelper.BuildYahooTreeDataList(yahooRecords);
+
+            _yahooTreeDataRepository.CollectionName = "Yahoo";
+            _yahooTreeDataRepository.Path = path;
+            _yahooTreeDataRepository.NamesFileContents = YahooHelper.BuildYahooNamesFile();
+
+            _yahooTreeDataRepository.SaveData(yahooTreeData);
+        }
+        #endregion
+
+        #endregion
 
     }
 }

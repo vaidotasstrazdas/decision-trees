@@ -39,7 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Base\MarketAction.cs" />
     <Compile Include="Data\YahooNormalized.cs" />
+    <Compile Include="Data\YahooTreeData.cs" />
     <Compile Include="Exceptions\BllException.cs" />
     <Compile Include="Interfaces\IYahooService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

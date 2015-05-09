@@ -7,7 +7,8 @@ namespace Bridge.IBLL.Interfaces
     {
 
         void ReadCsv(string filePath);
-        List<YahooNormalized> PrepareData();
+        IEnumerable<YahooNormalized> PrepareData();
+        void SaveYahooData(IList<YahooNormalized> yahooRecords, string path);
 
     }
 }

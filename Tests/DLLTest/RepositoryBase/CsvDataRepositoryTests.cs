@@ -14,6 +14,7 @@ namespace Tests.DLLTest.RepositoryBase
     [TestClass]
     public class CsvDataRepositoryTests
     {
+
         #region Private Fields
         private CsvDataRepository<YahooRecord> _dataRepository;
         private string _dataFilePath;
