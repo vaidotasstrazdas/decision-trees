@@ -4,6 +4,7 @@ using Bridge.IDLL.Data;
 using Bridge.IDLL.Interfaces;
 using Implementation.BLL;
 using Implementation.DLL;
+using Implementation.DLL.RepositoryBase;
 
 namespace Bridge.Infrastructure
 {

@@ -42,6 +42,7 @@
     <Compile Include="Data\YahooRecord.cs" />
     <Compile Include="Exceptions\DalException.cs" />
     <Compile Include="Interfaces\ICsvDataRepository.cs" />
+    <Compile Include="Interfaces\ITreeDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

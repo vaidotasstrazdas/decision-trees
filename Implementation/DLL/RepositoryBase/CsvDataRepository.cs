@@ -6,7 +6,7 @@ using Bridge.IDLL.Exceptions;
 using Bridge.IDLL.Interfaces;
 using Microsoft.VisualBasic.FileIO;
 
-namespace Implementation.DLL
+namespace Implementation.DLL.RepositoryBase
 {
     public class CsvDataRepository<TRecord> : ICsvDataRepository<TRecord>
     {

@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -50,8 +51,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CsvDataRepositoryTests.cs" />
+    <Compile Include="Models\FakeDataModel.cs" />
+    <Compile Include="RepositoryBase\CsvDataRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryBase\TreeDataRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Implementation\DLL\DLL.csproj">
@@ -62,6 +65,9 @@
       <Project>{A0F9650A-E365-4D50-AB41-9F2184F891F3}</Project>
       <Name>IDLL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

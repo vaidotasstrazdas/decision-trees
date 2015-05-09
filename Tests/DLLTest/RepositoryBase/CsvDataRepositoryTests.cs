@@ -1,14 +1,15 @@
 ﻿#region Usings
 
+using System.Configuration;
 using System.Globalization;
 using Bridge.IDLL.Data;
 using Bridge.IDLL.Exceptions;
-using Implementation.DLL;
+using Implementation.DLL.RepositoryBase;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 #endregion
 
-namespace Tests.DLLTest
+namespace Tests.DLLTest.RepositoryBase
 {
     [TestClass]
     public class CsvDataRepositoryTests
@@ -23,7 +24,7 @@ namespace Tests.DLLTest
         public void TestInitialize()
         {
             _dataRepository = new CsvDataRepository<YahooRecord>();
-            _dataFilePath = "E:/Data/Tests/TestData.csv";
+            _dataFilePath = ConfigurationManager.AppSettings["TestDataDirectory"] + "\\TestData.csv";
         }
         #endregion
 
