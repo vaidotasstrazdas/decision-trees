@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-
+using System.Linq;
 using Bridge.IBLL.Data;
 using Bridge.IBLL.Interfaces;
 #endregion
@@ -25,12 +25,12 @@ namespace Implementation.DataPreparation
             Console.WriteLine("CSV read successfully.");
             Console.WriteLine("Preparing CSV data.");
 
-            IEnumerable<YahooNormalized> normalizedData = _yahooService.PrepareData();
-            Console.WriteLine("Date,Close,Volatility");
-            foreach (var dataRecord in normalizedData)
-            {
-                Console.WriteLine("{0},{1},{2}", dataRecord.Date, dataRecord.Close, dataRecord.Volatility);
-            }
+            List<YahooNormalized> normalizedData = _yahooService.PrepareData().ToList();
+            Console.WriteLine("Data prepared successfully.");
+
+            Console.WriteLine("Saving normalized Yahoo data for decision tree generation software.");
+            _yahooService.SaveYahooData(normalizedData, ConfigurationManager.AppSettings["YahooDataOutputPath"]);
+            Console.WriteLine("Decision tree data for Yahoo saved successfully.");
 
             Console.WriteLine("Press Enter to Exit.");
             Console.ReadLine();

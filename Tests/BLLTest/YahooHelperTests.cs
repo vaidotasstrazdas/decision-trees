@@ -1,4 +1,6 @@
 ﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Bridge.IBLL.Data;
 using Bridge.IBLL.Data.Base;
+using Bridge.IDLL.Data;
 using Implementation.BLL.Helpers;
 #endregion
 
@@ -105,14 +108,45 @@ namespace Tests.BLLTest
         public void BuildYahooNamesFile_ShouldBuildCorrectFile()
         {
             var builder = new StringBuilder();
-
+            
             builder.AppendLine("Buy,Sell,Hold.	|classes");
             builder.AppendLine();
+            builder.AppendLine("Spread:	continuous.");
+            builder.AppendLine("Change:	continuous.");
             builder.AppendLine("Volatility:	continuous.");
 
             var namesFile = YahooHelper.BuildYahooNamesFile();
 
             Assert.AreEqual(builder.ToString(), namesFile);
+        }
+        #endregion
+
+        #region BuildYahooNormalized Tests
+
+        public void BuildYahooNormalized_ShouldBuildCorrectYahooNormalized()
+        {
+            var date = new DateTime(2015, 01, 01);
+            var record = new YahooRecord
+            {
+                Date = date,
+                Open = 1.1230004,
+                High = 2.1230004,
+                Low = 0.1230004,
+                Close = 2.0230004,
+                Volume = 123456789012
+            };
+
+            var yahooNormalized = YahooHelper.BuildYahooNormalized(record, 0.11, 0.13, 0.1234567890123);
+
+            Assert.AreEqual(date, yahooNormalized.Date);
+            Assert.AreEqual(1.1230004, yahooNormalized.Open);
+            Assert.AreEqual(2.1230004, yahooNormalized.High);
+            Assert.AreEqual(0.1230004, yahooNormalized.Low);
+            Assert.AreEqual(2.0230004, yahooNormalized.Close);
+            Assert.AreEqual(123456789012, yahooNormalized.Volume);
+            Assert.AreEqual(0.11, yahooNormalized.Change);
+            Assert.AreEqual(0.13, yahooNormalized.MovingAverage);
+            Assert.AreEqual(0.1234567890123, yahooNormalized.Volatility);
         }
         #endregion
 

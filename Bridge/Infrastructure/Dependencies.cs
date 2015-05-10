@@ -25,8 +25,8 @@ namespace Bridge.Infrastructure
                 .As<IYahooService>();
 
             Builder
-                .RegisterType<TreeDataRepository<YahooNormalized>>()
-                .As<ITreeDataRepository<YahooNormalized>>();
+                .RegisterType<TreeDataRepository<YahooTreeData>>()
+                .As<ITreeDataRepository<YahooTreeData>>();
 
             Builder
                 .RegisterType<CsvDataRepository<YahooRecord>>()

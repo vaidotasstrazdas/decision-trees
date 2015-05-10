@@ -55,34 +55,50 @@ namespace Implementation.BLL
         {
             var yahooRecords = Enumerable.Reverse(_yahooDataRepository.CsvLinesNormalized).ToList();
             var data = new List<YahooNormalized>();
-            var firstRecord = yahooRecords[0];
-            double mean = firstRecord.Close;
+
+            var period = 0;
+            double mean = 0.0;
             double variance = 0.0;
-            data.Add(new YahooNormalized
+            var index = 0;
+            
+            foreach (var record in yahooRecords)
             {
-                Date = firstRecord.Date,
-                Close = firstRecord.Close,
-                Volatility = 0.0
-            });
-
-            for (var sampleSize = 2; sampleSize <= yahooRecords.Count; sampleSize++)
-            {
-                var index = sampleSize - 1;
-                var prevSize = sampleSize - 1;
-                var record = yahooRecords[index];
-
-                mean = (prevSize * mean + yahooRecords[index].Close) / sampleSize;
-                var difference = yahooRecords[index].Close - mean;
-                variance = (double) prevSize / sampleSize * variance + 1.0 / prevSize * difference * difference;
-
-                var normalizedRecord = new YahooNormalized
+                var change = index > 0 ? record.Close / yahooRecords[index - 1].Close - 1.0 : 0.0;
+                if (period == 0)
                 {
-                    Date = record.Date,
-                    Close = record.Close,
-                    Volatility = Math.Round(Math.Sqrt(variance) * 1000000000) / 1000000000
-                };
-                data.Add(normalizedRecord);
+                    mean = record.Close;
+                    variance = 0.0;
+                    data.Add(YahooHelper.BuildYahooNormalized(record, change, mean, 0.0));
+                }
+                else
+                {
+                    var prevSize = period;
+                    var sizeNow = period + 1;
+
+                    mean = (prevSize * mean + record.Close) / sizeNow;
+                    var difference = record.Close - mean;
+                    variance = (double)prevSize / sizeNow * variance + 1.0 / prevSize * difference * difference;
+                    var volatility = Math.Round(Math.Sqrt(variance) * 1000000000) / 1000000000;
+                    data.Add(YahooHelper.BuildYahooNormalized(record, change, mean, volatility));
+                }
+                index++;
+                period++;
+                period %= 100;
             }
+
+            //for (var sampleSize = 2; sampleSize <= yahooRecords.Count; sampleSize++)
+            //{
+            //    var index = sampleSize - 1;
+            //    var prevSize = sampleSize - 1;
+            //    var record = yahooRecords[index];
+
+            //    mean = (prevSize * mean + yahooRecords[index].Close) / sampleSize;
+            //    var difference = yahooRecords[index].Close - mean;
+            //    variance = (double) prevSize / sampleSize * variance + 1.0 / prevSize * difference * difference;
+
+            //    var volatility = Math.Round(Math.Sqrt(variance) * 1000000000) / 1000000000;
+            //    data.Add(YahooHelper.BuildYahooNormalized(record, mean, volatility));
+            //}
 
             return data;
         }
