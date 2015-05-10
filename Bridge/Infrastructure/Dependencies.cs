@@ -1,6 +1,5 @@
 ﻿#region Usings
 using Autofac;
-
 using Bridge.IBLL.Data;
 using Bridge.IBLL.Interfaces;
 using Bridge.IDLL.Data;
