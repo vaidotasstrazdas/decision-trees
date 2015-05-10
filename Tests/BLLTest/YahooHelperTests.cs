@@ -63,7 +63,8 @@ namespace Tests.BLLTest
         #region BuildYahooTreeDataList Tests
 
         #region BuildYahooTreeDataList_ShouldGetCorrectCount
-        [TestMethod] public void BuildYahooTreeDataList_ShouldGetCorrectCount()
+        [TestMethod]
+        public void BuildYahooTreeDataList_ShouldGetCorrectCount()
         {
             var yahooTreeDataList = YahooHelper.BuildYahooTreeDataList(_yahooRecords).ToList();
 
