@@ -141,6 +141,82 @@ namespace Tests.BLLTest
         }
         #endregion
 
+        #region PrepareData_FirstChangeShouldBeZero
+        [TestMethod]
+        public void PrepareData_FirstChangeShouldBeZero()
+        {
+            var data = _service.PrepareData().ToList();
+
+            Assert.AreEqual(0.0, data[0].Change);
+        }
+        #endregion
+
+        #region PrepareData_ShouldCalculateCorrectChanges
+        [TestMethod]
+        public void PrepareData_ShouldCalculateCorrectChanges()
+        {
+            var data = _service.PrepareData().ToList();
+
+            Assert.AreEqual(-0.054200619, data[1].Change);
+            Assert.AreEqual(-0.24866051, data[2].Change);
+            Assert.AreEqual(-0.141283163, data[3].Change);
+            Assert.AreEqual(-0.167797092, data[4].Change);
+        }
+        #endregion
+
+        #region PrepareData_FirstMovingAverageShouldBeLastValue
+        [TestMethod]
+        public void PrepareData_FirstMovingAverageShouldBeLastValue()
+        {
+            var data = _service.PrepareData().ToList();
+
+            Assert.AreEqual(2.47654, data[0].MovingAverage);
+        }
+        #endregion
+
+        #region PrepareData_ShouldCalculateCorrectMovingAverages
+        [TestMethod]
+        public void PrepareData_ShouldCalculateCorrectMovingAverages()
+        {
+            var data = _service.PrepareData().ToList();
+
+            Assert.AreEqual(2.409425, data[1].MovingAverage);
+            Assert.AreEqual(2.192906667, data[2].MovingAverage);
+            Assert.AreEqual(2.0224875, data[3].MovingAverage);
+            Assert.AreEqual(1.86952, data[4].MovingAverage);
+        }
+        #endregion
+
+        #region PrepareData_PeriodProvided_ShouldRefreshVolatilities
+        [TestMethod]
+        public void PrepareData_PeriodProvided_ShouldRefreshVolatilities()
+        {
+            const int period = 3;
+            var data = _service.PrepareData(period).ToList();
+
+            Assert.AreEqual(0.0, data[0].Volatility);
+            Assert.AreEqual(0.067115, data[1].Volatility);
+            Assert.AreEqual(0.311068041, data[2].Volatility);
+            Assert.AreEqual(0.0, data[3].Volatility);
+            Assert.AreEqual(0.12679, data[4].Volatility);
+        }
+        #endregion
+
+        #region PrepareData_PeriodProvided_ShouldRefreshMovingAverages
+        [TestMethod]
+        public void PrepareData_PeriodProvided_ShouldRefreshMovingAverages()
+        {
+            const int period = 3;
+            var data = _service.PrepareData(period).ToList();
+
+            Assert.AreEqual(2.47654, data[0].MovingAverage);
+            Assert.AreEqual(2.409425, data[1].MovingAverage);
+            Assert.AreEqual(2.192906667, data[2].MovingAverage);
+            Assert.AreEqual(1.51123, data[3].MovingAverage);
+            Assert.AreEqual(1.38444, data[4].MovingAverage);
+        }
+        #endregion
+
         #endregion
 
         #region SaveYahooData Tests

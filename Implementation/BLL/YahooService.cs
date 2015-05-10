@@ -51,7 +51,7 @@ namespace Implementation.BLL
             }
         }
 
-        public IEnumerable<YahooNormalized> PrepareData()
+        public IEnumerable<YahooNormalized> PrepareData(int updatePeriod = 100)
         {
             var yahooRecords = Enumerable.Reverse(_yahooDataRepository.CsvLinesNormalized).ToList();
             var data = new List<YahooNormalized>();
@@ -63,7 +63,7 @@ namespace Implementation.BLL
             
             foreach (var record in yahooRecords)
             {
-                var change = index > 0 ? record.Close / yahooRecords[index - 1].Close - 1.0 : 0.0;
+                var change = index > 0 ? Math.Round((record.Close / yahooRecords[index - 1].Close - 1.0) * 1000000000.0) / 1000000000.0 : 0.0;
                 if (period == 0)
                 {
                     mean = record.Close;
@@ -79,26 +79,12 @@ namespace Implementation.BLL
                     var difference = record.Close - mean;
                     variance = (double)prevSize / sizeNow * variance + 1.0 / prevSize * difference * difference;
                     var volatility = Math.Round(Math.Sqrt(variance) * 1000000000) / 1000000000;
-                    data.Add(YahooHelper.BuildYahooNormalized(record, change, mean, volatility));
+                    data.Add(YahooHelper.BuildYahooNormalized(record, change, Math.Round(mean * 1000000000.0) / 1000000000.0, volatility));
                 }
                 index++;
                 period++;
-                period %= 100;
+                period %= updatePeriod;
             }
-
-            //for (var sampleSize = 2; sampleSize <= yahooRecords.Count; sampleSize++)
-            //{
-            //    var index = sampleSize - 1;
-            //    var prevSize = sampleSize - 1;
-            //    var record = yahooRecords[index];
-
-            //    mean = (prevSize * mean + yahooRecords[index].Close) / sampleSize;
-            //    var difference = yahooRecords[index].Close - mean;
-            //    variance = (double) prevSize / sampleSize * variance + 1.0 / prevSize * difference * difference;
-
-            //    var volatility = Math.Round(Math.Sqrt(variance) * 1000000000) / 1000000000;
-            //    data.Add(YahooHelper.BuildYahooNormalized(record, mean, volatility));
-            //}
 
             return data;
         }
