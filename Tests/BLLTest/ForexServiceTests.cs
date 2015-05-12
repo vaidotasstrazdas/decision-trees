@@ -7,10 +7,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 using Bridge.IBLL.Data;
+using Bridge.IBLL.Data.Base;
 using Bridge.IBLL.Exceptions;
 using Bridge.IDLL.Exceptions;
 using Bridge.IDLL.Interfaces;
 using Implementation.BLL;
+using Implementation.BLL.Helpers;
 using Tests.BLLTest.DataBuilders;
 #endregion
 
@@ -538,6 +540,85 @@ namespace Tests.BLLTest
             var deviationsActual = data[1].ForexData.Select(x => x.SpreadStandardDeviation).ToList();
 
             CollectionAssert.AreEqual(deviationsExpected, deviationsActual);
+        }
+        #endregion
+
+        #region PrepareData_Split60Provided_ShouldGetCorrectNameOfTheFirstSplit
+        [TestMethod]
+        public void PrepareData_Split60Provided_ShouldGetCorrectNameOfTheFirstSplit()
+        {
+            var data = _service.PrepareData(60);
+
+            Assert.AreEqual("0", data[0].FileName);
+        }
+        #endregion
+
+        #region PrepareData_Split60Provided_ShouldGetCorrectNameOfTheSecondSplit
+        [TestMethod]
+        public void PrepareData_Split60Provided_ShouldGetCorrectNameOfTheSecondSplit()
+        {
+            var data = _service.PrepareData(60);
+
+            Assert.AreEqual("1", data[1].FileName);
+        }
+        #endregion
+
+        #region PrepareData_Split1800Provided_BuyAndSellQuantityMustBeTheSame
+        [TestMethod]
+        public void PrepareData_Split1800Provided_BuyAndSellQuantityMustBeTheSame()
+        {
+            var data = _service.PrepareData(1800);
+
+            var allActions = data[0].ForexData.Select(x => x.Action.ToString()).ToList();
+            var buyActions = allActions.Count(x => x == "Buy");
+            var sellActions = allActions.Count(x => x == "Sell");
+
+            Assert.AreEqual(buyActions, sellActions);
+        }
+        #endregion
+
+        #region PrepareData_Split1800ProvidedAndMiniTradingMade_ShouldMakeProfit
+        [TestMethod]
+        public void PrepareData_Split1800ProvidedAndMiniTradingMade_ShouldMakeProfit()
+        {
+            var data = _service.PrepareData(1800);
+            var forexTreeData = data[0].ForexData;
+
+            const double spending = 10000.0;
+            const double margin = 0.02;
+            const double leverage = 1.0 / margin;
+            var eurosSpent = 0.0;
+            var profit = 0.0;
+            List<double> dollarsList = new List<double>();
+            foreach (var record in forexTreeData)
+            {
+                double dollars;
+                switch (record.Action)
+                {
+                    case MarketAction.Hold:
+                        continue;
+                    case MarketAction.Buy:
+                        eurosSpent += spending;
+                        dollars = spending * leverage * record.Bid;
+                        dollarsList.Add(MathHelpers.PreservePrecision(dollars));
+                        continue;
+                }
+
+                dollars = dollarsList.First();
+                dollarsList.RemoveAt(0);
+                profit += dollars / record.Ask - spending * leverage;
+                profit = MathHelpers.CurrencyPrecision(profit);
+            }
+
+            if (profit < 0)
+            {
+                Assert.Fail();
+            }
+
+            var eurosNow = eurosSpent + profit;
+
+            Assert.AreEqual(460000.0, eurosSpent);
+            Assert.AreEqual(462671.64, eurosNow);
         }
         #endregion
 

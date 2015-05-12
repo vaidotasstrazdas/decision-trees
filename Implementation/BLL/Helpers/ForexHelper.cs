@@ -74,8 +74,7 @@ namespace Implementation.BLL.Helpers
         {
             const int ticks = 30;
             var forexData = currentDto.ForexData;
-            var to = forexData.Count - ticks;
-            for (var i = 0; i < to; i++)
+            for (var i = 0; i < forexData.Count; i++)
             {
                 var record = forexData[i];
                 if (record.Action != default(MarketAction))
@@ -83,14 +82,19 @@ namespace Implementation.BLL.Helpers
                     continue;
                 }
                 var baseBid = record.Bid;
-                var maxDifference = double.MinValue;
+                var maxDifference = 0.0;
                 var maxIndex = -1;
                 for (var j = 1; j < ticks; j++)
                 {
                     var index = i + j;
-                    var ask = forexData[index].Ask;
+                    if (index >= forexData.Count)
+                    {
+                        continue;
+                    }
+                    var observableRecord = forexData[index];
+                    var ask = observableRecord.Ask;
                     var difference = baseBid - ask;
-                    if (difference > maxDifference)
+                    if (observableRecord.Action == default(MarketAction) && difference > maxDifference)
                     {
                         maxDifference = difference;
                         maxIndex = index;
