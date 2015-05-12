@@ -5,6 +5,7 @@ using Bridge.IBLL.Interfaces;
 using Bridge.IDLL.Data;
 using Bridge.IDLL.Interfaces;
 using Implementation.BLL;
+using Implementation.DLL;
 using Implementation.DLL.RepositoryBase;
 #endregion
 
@@ -30,6 +31,10 @@ namespace Bridge.Infrastructure
             Builder
                 .RegisterType<CsvDataRepository<YahooRecord>>()
                 .As<ICsvDataRepository<YahooRecord>>();
+
+            Builder
+                .RegisterType<ForexCsvRepository>()
+                .As<IForexCsvRepository>();
         }
 
     }

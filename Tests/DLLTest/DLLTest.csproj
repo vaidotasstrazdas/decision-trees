@@ -51,6 +51,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ForexCsvRepositoryTests.cs" />
     <Compile Include="Models\FakeDataModel.cs" />
     <Compile Include="RepositoryBase\CsvDataRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

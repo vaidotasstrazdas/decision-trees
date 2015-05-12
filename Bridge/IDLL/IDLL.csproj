@@ -39,9 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ForexRecord.cs" />
     <Compile Include="Data\YahooRecord.cs" />
     <Compile Include="Exceptions\DalException.cs" />
     <Compile Include="Interfaces\ICsvDataRepository.cs" />
+    <Compile Include="Interfaces\IForexCsvRepository.cs" />
     <Compile Include="Interfaces\ITreeDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
