@@ -33,7 +33,7 @@ namespace Implementation.BLL
 
         #region Implemented Interfaces
 
-        #region IYahooService
+        #region IService
         public void ReadCsv(string filePath)
         {
             try
@@ -50,6 +50,9 @@ namespace Implementation.BLL
                 throw new BllException(string.Format("{0}: {1}", "Exception of other origin", exception.Message));
             }
         }
+        #endregion
+
+        #region IYahooService
 
         public IEnumerable<YahooNormalized> PrepareData(int updatePeriod = 100)
         {
