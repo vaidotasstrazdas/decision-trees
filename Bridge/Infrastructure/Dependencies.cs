@@ -25,8 +25,16 @@ namespace Bridge.Infrastructure
                 .As<IYahooService>();
 
             Builder
+                .RegisterType<ForexService>()
+                .As<IForexService>();
+
+            Builder
                 .RegisterType<TreeDataRepository<YahooTreeData>>()
                 .As<ITreeDataRepository<YahooTreeData>>();
+
+            Builder
+                .RegisterType<TreeDataRepository<ForexTreeData>>()
+                .As<ITreeDataRepository<ForexTreeData>>();
 
             Builder
                 .RegisterType<CsvDataRepository<YahooRecord>>()

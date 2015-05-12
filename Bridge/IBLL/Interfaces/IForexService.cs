@@ -7,7 +7,7 @@ namespace Bridge.IBLL.Interfaces
     public interface IForexService : IService
     {
 
-        void PrepareData(int recalculationPeriodSeconds, int splitPeriodSeconds);
+        List<ForexDto> PrepareData(int splitPeriodSeconds);
         void SaveForexData(IList<ForexDto> forexRecords, string path);
 
     }

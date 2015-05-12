@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Bridge\In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLLTest", "Tests\BLLTest\BLLTest.csproj", "{306FA3BC-5BDC-45F5-B704-69BB92641911}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForexDataPreparation", "ForexDataPreparation\ForexDataPreparation.csproj", "{8A79F9B1-4848-4CE6-96E5-C4C38D03E3D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{306FA3BC-5BDC-45F5-B704-69BB92641911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{306FA3BC-5BDC-45F5-B704-69BB92641911}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{306FA3BC-5BDC-45F5-B704-69BB92641911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A79F9B1-4848-4CE6-96E5-C4C38D03E3D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A79F9B1-4848-4CE6-96E5-C4C38D03E3D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A79F9B1-4848-4CE6-96E5-C4C38D03E3D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A79F9B1-4848-4CE6-96E5-C4C38D03E3D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,5 +81,6 @@ Global
 		{13639659-2427-42EB-B1CC-59BC93D375CC} = {70CB88B9-97DD-46ED-B907-823343301049}
 		{E38A7B28-2987-4C51-8C28-30A5DD8C993F} = {7D1EE338-979C-45A3-9455-91D62B7B2226}
 		{306FA3BC-5BDC-45F5-B704-69BB92641911} = {3A364453-AC5D-46F1-8764-BE09ED49E6A0}
+		{8A79F9B1-4848-4CE6-96E5-C4C38D03E3D4} = {70CB88B9-97DD-46ED-B907-823343301049}
 	EndGlobalSection
 EndGlobal

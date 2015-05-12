@@ -66,7 +66,7 @@ namespace Implementation.BLL
             
             foreach (var record in yahooRecords)
             {
-                var change = index > 0 ? Math.Round((record.Close / yahooRecords[index - 1].Close - 1.0) * 1000000000.0) / 1000000000.0 : 0.0;
+                var change = index > 0 ? MathHelpers.PreservePrecision(record.Close / yahooRecords[index - 1].Close - 1.0) : 0.0;
                 if (period == 0)
                 {
                     mean = record.Close;
@@ -81,8 +81,8 @@ namespace Implementation.BLL
                     mean = (prevSize * mean + record.Close) / sizeNow;
                     var difference = record.Close - mean;
                     variance = (double)prevSize / sizeNow * variance + 1.0 / prevSize * difference * difference;
-                    var volatility = Math.Round(Math.Sqrt(variance) * 1000000000) / 1000000000;
-                    data.Add(YahooHelper.BuildYahooNormalized(record, change, Math.Round(mean * 1000000000.0) / 1000000000.0, volatility));
+                    var volatility = MathHelpers.PreservePrecision(Math.Sqrt(variance));
+                    data.Add(YahooHelper.BuildYahooNormalized(record, change, MathHelpers.PreservePrecision(mean), volatility));
                 }
                 index++;
                 period++;
