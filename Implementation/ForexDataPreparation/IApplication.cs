@@ -1,4 +1,4 @@
-﻿namespace ForexDataPreparation
+﻿namespace Implementation.ForexDataPreparation
 {
     public interface IApplication
     {

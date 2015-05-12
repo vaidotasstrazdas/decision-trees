@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8A79F9B1-4848-4CE6-96E5-C4C38D03E3D4}</ProjectGuid>
+    <ProjectGuid>{48399B76-F8A3-41D0-8219-DD1D1109A817}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ForexDataPreparation</RootNamespace>
+    <RootNamespace>Implementation.ForexDataPreparation</RootNamespace>
     <AssemblyName>ForexDataPreparation</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -54,11 +54,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bridge\IBLL\IBLL.csproj">
+    <ProjectReference Include="..\..\Bridge\IBLL\IBLL.csproj">
       <Project>{CE2D0678-D88B-4023-9F76-9455694656B3}</Project>
       <Name>IBLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bridge\Infrastructure\Infrastructure.csproj">
+    <ProjectReference Include="..\..\Bridge\Infrastructure\Infrastructure.csproj">
       <Project>{E38A7B28-2987-4C51-8C28-30A5DD8C993F}</Project>
       <Name>Infrastructure</Name>
     </ProjectReference>

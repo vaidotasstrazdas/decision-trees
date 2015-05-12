@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Bridge.Infrastructure;
 
-namespace ForexDataPreparation
+namespace Implementation.ForexDataPreparation
 {
     class Program
     {

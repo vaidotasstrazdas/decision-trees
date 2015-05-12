@@ -7,7 +7,7 @@ using Bridge.IBLL.Interfaces;
 
 #endregion
 
-namespace ForexDataPreparation
+namespace Implementation.ForexDataPreparation
 {
     public class Application : IApplication
     {
