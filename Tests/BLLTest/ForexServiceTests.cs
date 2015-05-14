@@ -21,6 +21,7 @@ namespace Tests.BLLTest
     [TestClass]
     public class ForexServiceTests
     {
+
         #region Private Fields
         private Mock<IForexCsvRepository> _forexCsvRepositoryMock;
         private Mock<ITreeDataRepository<ForexTreeData>> _treeRepositoryMock;
@@ -563,62 +564,76 @@ namespace Tests.BLLTest
         }
         #endregion
 
-        #region PrepareData_Split1800Provided_BuyAndSellQuantityMustBeTheSame
+        #endregion
+
+        #region SaveForexData Tests
+
+        #region SaveForexData_Splitted60DataProvided_ShouldSetCorrectPath
         [TestMethod]
-        public void PrepareData_Split1800Provided_BuyAndSellQuantityMustBeTheSame()
+        public void SaveForexData_Splitted60DataProvided_ShouldSetCorrectPath()
         {
-            var data = _service.PrepareData(1800);
+            var data = _service.PrepareData(60);
 
-            var allActions = data[0].ForexData.Select(x => x.Action.ToString()).ToList();
-            var buyActions = allActions.Count(x => x == "Buy");
-            var sellActions = allActions.Count(x => x == "Sell");
+            _service.SaveForexData(data, "SomePath");
 
-            Assert.AreEqual(buyActions, sellActions);
+            _treeRepositoryMock.VerifySet(x => x.Path = "SomePath", Times.Once());
         }
         #endregion
 
-        #region PrepareData_Split1800ProvidedAndMiniTradingMade_ShouldMakeProfit
+        #region SaveForexData_Splitted60DataProvided_ShouldSetCorrectNamesFile
         [TestMethod]
-        public void PrepareData_Split1800ProvidedAndMiniTradingMade_ShouldMakeProfit()
+        public void SaveForexData_Splitted60DataProvided_ShouldSetCorrectNamesFile()
         {
-            var data = _service.PrepareData(1800);
-            var forexTreeData = data[0].ForexData;
+            var data = _service.PrepareData(60);
 
-            const double spending = 10000.0;
-            const double margin = 0.02;
-            const double leverage = 1.0 / margin;
-            var eurosSpent = 0.0;
-            var profit = 0.0;
-            List<double> dollarsList = new List<double>();
-            foreach (var record in forexTreeData)
+            _service.SaveForexData(data, "SomePath");
+
+            _treeRepositoryMock.VerifySet(x => x.NamesFileContents = ForexHelper.BuildForexNamesFile(), Times.Once());
+        }
+        #endregion
+
+        #region SaveForexData_Splitted60DataProvided_ShouldSetCorrectCollectionNames
+        [TestMethod]
+        public void SaveForexData_Splitted60DataProvided_ShouldSetCorrectCollectionNames()
+        {
+            var data = _service.PrepareData(60);
+
+            _service.SaveForexData(data, "SomePath");
+
+            for (var i = 0; i < 12; i++)
             {
-                double dollars;
-                switch (record.Action)
-                {
-                    case MarketAction.Hold:
-                        continue;
-                    case MarketAction.Buy:
-                        eurosSpent += spending;
-                        dollars = spending * leverage * record.Bid;
-                        dollarsList.Add(MathHelpers.PreservePrecision(dollars));
-                        continue;
-                }
+                var collectionName = "Forex_" + i;
+                _treeRepositoryMock.VerifySet(x => x.CollectionName = collectionName, Times.Once);
+            }
+        }
+        #endregion
 
-                dollars = dollarsList.First();
-                dollarsList.RemoveAt(0);
-                profit += dollars / record.Ask - spending * leverage;
-                profit = MathHelpers.CurrencyPrecision(profit);
+        #region SaveForexData_Splitted60DataProvided_ShouldSaveForexDataTwelveTimes
+        [TestMethod]
+        public void SaveForexData_Splitted60DataProvided_ShouldSaveForexDataTwelveTimes()
+        {
+            var data = _service.PrepareData(60);
+
+            _service.SaveForexData(data, "SomePath");
+
+            _treeRepositoryMock.Verify(x => x.SaveData(It.IsAny<IEnumerable<ForexTreeData>>()), Times.Exactly(12));
+        }
+        #endregion
+
+        #region SaveForexData_Splitted60DataProvided_ShouldSaveCorrectSplits
+        [TestMethod]
+        public void SaveForexData_Splitted60DataProvided_ShouldSaveCorrectSplits()
+        {
+            var data = _service.PrepareData(60);
+
+            _service.SaveForexData(data, "SomePath");
+
+            for (var i = 0; i < 12; i++)
+            {
+                var index = i;
+                _treeRepositoryMock.Verify(x => x.SaveData(data[index].ForexData), Times.Once);
             }
 
-            if (profit < 0)
-            {
-                Assert.Fail();
-            }
-
-            var eurosNow = eurosSpent + profit;
-
-            Assert.AreEqual(460000.0, eurosSpent);
-            Assert.AreEqual(462671.64, eurosNow);
         }
         #endregion
 

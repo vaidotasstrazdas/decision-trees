@@ -1,4 +1,5 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.Collections.Generic;
 using Bridge.IBLL.Data;
 using Bridge.IBLL.Exceptions;
@@ -6,13 +7,17 @@ using Bridge.IBLL.Interfaces;
 using Bridge.IDLL.Exceptions;
 using Bridge.IDLL.Interfaces;
 using Implementation.BLL.Helpers;
+#endregion
 
 namespace Implementation.BLL
 {
     public class ForexService : IForexService
     {
+
+        #region Private Fields
         private readonly IForexCsvRepository _forexCsvRepository;
         private readonly ITreeDataRepository<ForexTreeData> _forexTreeDataRepository;
+        #endregion
 
         #region Constructors and Destructors
         public ForexService(
@@ -101,7 +106,13 @@ namespace Implementation.BLL
 
         public void SaveForexData(IList<ForexDto> forexRecords, string path)
         {
-            throw new NotImplementedException();
+            _forexTreeDataRepository.Path = path;
+            _forexTreeDataRepository.NamesFileContents = ForexHelper.BuildForexNamesFile();
+            foreach (var record in forexRecords)
+            {
+                _forexTreeDataRepository.CollectionName = "Forex_" + record.FileName;
+                _forexTreeDataRepository.SaveData(record.ForexData);
+            }
         }
         #endregion
 
