@@ -63,9 +63,18 @@ namespace Implementation.BLL.Helpers
 
             builder.AppendLine("Buy,Sell,Hold.	|classes");
             builder.AppendLine();
+            builder.AppendLine("Bid:	continuous.");
+            builder.AppendLine("Ask:	continuous.");
             builder.AppendLine("Spread:	continuous.");
-            builder.AppendLine("Change:	continuous.");
-            builder.AppendLine("Volatility:	continuous.");
+            builder.AppendLine("BidChange:	continuous.");
+            builder.AppendLine("AskChange:	continuous.");
+            builder.AppendLine("SpreadChange:	continuous.");
+            builder.AppendLine("BidStandardDeviation:	continuous.");
+            builder.AppendLine("AskStandardDeviation:	continuous.");
+            builder.AppendLine("SpreadStandardDeviation:	continuous.");
+            builder.AppendLine("BidMovingAverage:	continuous.");
+            builder.AppendLine("AskMovingAverage:	continuous.");
+            builder.AppendLine("SpreadMovingAverage:	continuous.");
 
             return builder.ToString();
         }

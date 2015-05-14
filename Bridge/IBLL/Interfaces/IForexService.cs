@@ -8,7 +8,7 @@ namespace Bridge.IBLL.Interfaces
     {
 
         List<ForexDto> PrepareData(int splitPeriodSeconds);
-        void SaveForexData(IList<ForexDto> forexRecords, string path);
+        void SaveForexData(IList<ForexDto> forexRecords, int period, string path);
 
     }
 }

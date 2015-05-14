@@ -1,6 +1,7 @@
 ﻿#region Usings
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Bridge.IBLL.Data;
 using Bridge.IBLL.Exceptions;
 using Bridge.IBLL.Interfaces;
@@ -104,13 +105,13 @@ namespace Implementation.BLL
             return forexSplitData;
         }
 
-        public void SaveForexData(IList<ForexDto> forexRecords, string path)
+        public void SaveForexData(IList<ForexDto> forexRecords, int period, string path)
         {
             _forexTreeDataRepository.Path = path;
             _forexTreeDataRepository.NamesFileContents = ForexHelper.BuildForexNamesFile();
             foreach (var record in forexRecords)
             {
-                _forexTreeDataRepository.CollectionName = "Forex_" + record.FileName;
+                _forexTreeDataRepository.CollectionName = Path.Combine(period.ToString(), "Forex_" + record.FileName);
                 _forexTreeDataRepository.SaveData(record.ForexData);
             }
         }

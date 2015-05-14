@@ -80,6 +80,12 @@ namespace Implementation.DLL.RepositoryBase
             _namesFilePath = Path + "/" + CollectionName + ".names";
             _dataFilePath = Path + "/" + CollectionName + ".data";
 
+            var collectionPath = System.IO.Path.GetDirectoryName(_dataFilePath);
+            if (!string.IsNullOrWhiteSpace(collectionPath) && collectionPath != Path)
+            {
+                Directory.CreateDirectory(collectionPath);
+            }
+
         }
         #endregion
 

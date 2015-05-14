@@ -1,6 +1,7 @@
 ﻿#region Usings
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -574,7 +575,7 @@ namespace Tests.BLLTest
         {
             var data = _service.PrepareData(60);
 
-            _service.SaveForexData(data, "SomePath");
+            _service.SaveForexData(data, 60, "SomePath");
 
             _treeRepositoryMock.VerifySet(x => x.Path = "SomePath", Times.Once());
         }
@@ -586,7 +587,7 @@ namespace Tests.BLLTest
         {
             var data = _service.PrepareData(60);
 
-            _service.SaveForexData(data, "SomePath");
+            _service.SaveForexData(data, 60, "SomePath");
 
             _treeRepositoryMock.VerifySet(x => x.NamesFileContents = ForexHelper.BuildForexNamesFile(), Times.Once());
         }
@@ -598,11 +599,11 @@ namespace Tests.BLLTest
         {
             var data = _service.PrepareData(60);
 
-            _service.SaveForexData(data, "SomePath");
+            _service.SaveForexData(data, 60, "SomePath");
 
             for (var i = 0; i < 12; i++)
             {
-                var collectionName = "Forex_" + i;
+                var collectionName = "60\\Forex_" + i;
                 _treeRepositoryMock.VerifySet(x => x.CollectionName = collectionName, Times.Once);
             }
         }
@@ -614,7 +615,7 @@ namespace Tests.BLLTest
         {
             var data = _service.PrepareData(60);
 
-            _service.SaveForexData(data, "SomePath");
+            _service.SaveForexData(data, 60, "SomePath");
 
             _treeRepositoryMock.Verify(x => x.SaveData(It.IsAny<IEnumerable<ForexTreeData>>()), Times.Exactly(12));
         }
@@ -626,7 +627,7 @@ namespace Tests.BLLTest
         {
             var data = _service.PrepareData(60);
 
-            _service.SaveForexData(data, "SomePath");
+            _service.SaveForexData(data, 60, "SomePath");
 
             for (var i = 0; i < 12; i++)
             {
