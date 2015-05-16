@@ -41,8 +41,8 @@ namespace Shared.DecisionTrees.DataStructure
         public void SaveDecisionTree(string rawTree)
         {
 
-            _decisionTreeReader.ReadSubTrees(rawTree);
             rawTree = _decisionTreeReader.NormalizeTreeSource(rawTree);
+            _decisionTreeReader.ReadSubTrees(rawTree);
             rawTree = _decisionTreeReader.NormalizeTree(rawTree);
 
             var lines = rawTree.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);

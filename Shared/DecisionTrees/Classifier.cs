@@ -64,7 +64,7 @@ namespace Shared.DecisionTrees
         private void SetRecords()
         {
             var type = typeof (TRecord);
-            foreach (var property in type.GetProperties())
+            foreach (var property in type.GetProperties().Where(x => x.PropertyType == typeof(double)))
             {
                 Records.Add(property.Name, 0.0);
             }
