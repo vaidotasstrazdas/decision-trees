@@ -46,7 +46,7 @@ namespace Shared.DecisionTrees
         #region Methods
         private static Rule SetRule(string mainRulePart)
         {
-            var rule = new Rule { Level = mainRulePart.Split(new[] { "   " }, StringSplitOptions.None).Length - 1 };
+            var rule = new Rule { Level = mainRulePart.Split(new[] { "|   " }, StringSplitOptions.None).Length - 1 };
 
             var properties = mainRulePart.Replace("   ", string.Empty).Split(new[] { " " }, StringSplitOptions.None);
             var relation = properties[1];
