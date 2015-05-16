@@ -17,7 +17,7 @@ namespace Shared.DecisionTrees
         public Rule Read(string line)
         {
 
-            var parts = line.Split(new[] { " :" }, StringSplitOptions.None);
+            var parts = line.Split(new[] { ":" }, StringSplitOptions.None);
 
             var rule = SetRule(parts[0]);
             rule.Action = ReadAction(parts[1]);
@@ -46,9 +46,9 @@ namespace Shared.DecisionTrees
         #region Methods
         private static Rule SetRule(string mainRulePart)
         {
-            var rule = new Rule { Level = mainRulePart.Split(new[] { "|   " }, StringSplitOptions.None).Length - 1 };
+            var rule = new Rule { Level = mainRulePart.Split(new[] { "    " }, StringSplitOptions.None).Length - 1 };
 
-            var properties = mainRulePart.Replace("   ", string.Empty).Split(new[] { " " }, StringSplitOptions.None);
+            var properties = mainRulePart.Trim().Replace("   ", string.Empty).Split(new[] { " " }, StringSplitOptions.None);
             var relation = properties[1];
 
             rule.Property = properties[0];

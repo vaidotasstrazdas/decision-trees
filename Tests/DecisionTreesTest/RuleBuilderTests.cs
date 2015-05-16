@@ -30,7 +30,7 @@ namespace Tests.DecisionTreesTest
         [TestMethod]
         public void Read_RootSplitRuleProvided_ShouldReadCorrectLevel()
         {
-            var rule = _builder.Read("Bid <= 1.2622 :");
+            var rule = _builder.Read("Bid <= 1.2622:");
 
             Assert.AreEqual(0, rule.Level);
         }
@@ -40,7 +40,7 @@ namespace Tests.DecisionTreesTest
         [TestMethod]
         public void Read_LevelOneSplitRuleProvidedWithFinalGroup_ShouldReadCorrectLevel()
         {
-            var rule = _builder.Read("|   Ask > 1.2622 : Hold (244.0/9.6)");
+            var rule = _builder.Read("    Ask > 1.2622:Hold (244.0/9.6)");
 
             Assert.AreEqual(1, rule.Level);
         }
@@ -50,7 +50,7 @@ namespace Tests.DecisionTreesTest
         [TestMethod]
         public void Read_LevelOneSplitRuleProvidedWithoutFinalGroup_ShouldReadCorrectLevel()
         {
-            var rule = _builder.Read("|   Ask <= 1.2622 :");
+            var rule = _builder.Read("    Ask <= 1.2622:");
 
             Assert.AreEqual(1, rule.Level);
         }
@@ -60,7 +60,7 @@ namespace Tests.DecisionTreesTest
         [TestMethod]
         public void Read_LevelSixSplitRuleProvidedShouldReadCorrectLevel()
         {
-            var rule = _builder.Read("|   |   |   |   |   |   Ask <= 1.26208 : Buy (4.0/1.2)");
+            var rule = _builder.Read("                        Ask <= 1.26208:Buy (4.0/1.2)");
 
             Assert.AreEqual(6, rule.Level);
         }
