@@ -6,6 +6,8 @@ namespace Shared.DecisionTrees.Interfaces
     {
 
         Dictionary<string, string> SubTrees { get; }
+
+        string NormalizeTreeSource(string treeSource);
         string NormalizeTree(string treeSource);
         void ReadSubTrees(string treeSource);
 

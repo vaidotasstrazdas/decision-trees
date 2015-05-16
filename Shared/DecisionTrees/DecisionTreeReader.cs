@@ -19,6 +19,19 @@ namespace Shared.DecisionTrees
         #region Implemented Interfaces
 
         #region IDecisionTreeReader
+
+        public string NormalizeTreeSource(string treeSource)
+        {
+            return treeSource
+                .Replace("|", " ")
+                .Replace(":...", "    ")
+                .Replace(":   ", "    ")
+                .Replace(" : ", ":")
+                .Replace(" :", ":")
+                .Replace(": ", ":")
+                .Replace("SubTree", "Subtree");
+        }
+
         public string NormalizeTree(string treeSource)
         {
             var parts = treeSource.Split(new[] { "Subtree " }, StringSplitOptions.None);
@@ -60,15 +73,15 @@ namespace Shared.DecisionTrees
 
         private void ReadLine(string line, int addLevels)
         {
-            var level = line.Split(new[] { "|   " }, StringSplitOptions.None).Length - 1;
-            var parts = line.Split(new[] { " :" }, StringSplitOptions.None);
+            var level = line.Split(new[] { "    " }, StringSplitOptions.None).Length - 1;
+            var parts = line.Split(new[] { ":" }, StringSplitOptions.None);
             var subTreeKey = parts[1];
             if (SubTrees.ContainsKey(subTreeKey))
             {
                 line = line.Replace(subTreeKey, string.Empty);
                 for (var k = 0; k < addLevels; k++)
                 {
-                    _treeBuilder.Append("|   ");
+                    _treeBuilder.Append("    ");
                 }
                 _treeBuilder.AppendLine(line);
                 var subTreeLines = SubTrees[subTreeKey].Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -81,7 +94,7 @@ namespace Shared.DecisionTrees
             {
                 for (var k = 0; k < addLevels; k++)
                 {
-                    _treeBuilder.Append("|   ");
+                    _treeBuilder.Append("    ");
                 }
                 _treeBuilder.Append(line);
                 _treeBuilder.AppendLine();
