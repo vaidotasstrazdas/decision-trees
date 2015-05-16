@@ -10,8 +10,9 @@ namespace Shared.DecisionTrees
     public class DecisionTreeReader : IDecisionTreeReader
     {
 
+        public Dictionary<string, string> SubTrees { get; private set; }
+
         #region Private Fields
-        private Dictionary<string, string> _subtrees;
         private StringBuilder _treeBuilder;
         #endregion
 
@@ -20,6 +21,8 @@ namespace Shared.DecisionTrees
         #region IDecisionTreeReader
         public string NormalizeTree(string treeSource)
         {
+            var parts = treeSource.Split(new[] { "Subtree " }, StringSplitOptions.None);
+            treeSource = parts[0];
             _treeBuilder = new StringBuilder();
             var lines = treeSource.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -28,12 +31,14 @@ namespace Shared.DecisionTrees
                 ReadLine(line, 0);
             }
 
-            return _treeBuilder.ToString();
+            return _treeBuilder.ToString().Trim();
         }
 
-        public void ReadSubTrees(string[] parts)
+        public void ReadSubTrees(string treeSource)
         {
-            _subtrees = new Dictionary<string, string>();
+            var parts = treeSource.Split(new[] { "Subtree " }, StringSplitOptions.None);
+
+            SubTrees = new Dictionary<string, string>();
 
             for (var i = 1; i < parts.Length; i++)
             {
@@ -43,7 +48,7 @@ namespace Shared.DecisionTrees
                 {
                     builder.AppendLine(subtreeParts[j]);
                 }
-                _subtrees.Add(subtreeParts[0], builder.ToString());
+                SubTrees.Add(subtreeParts[0], builder.ToString());
             }
 
         }
@@ -58,19 +63,23 @@ namespace Shared.DecisionTrees
             var level = line.Split(new[] { "|   " }, StringSplitOptions.None).Length - 1;
             var parts = line.Split(new[] { " :" }, StringSplitOptions.None);
             var subTreeKey = parts[1];
-            if (_subtrees.ContainsKey(subTreeKey))
+            if (SubTrees.ContainsKey(subTreeKey))
             {
                 line = line.Replace(subTreeKey, string.Empty);
+                for (var k = 0; k < addLevels; k++)
+                {
+                    _treeBuilder.Append("|   ");
+                }
                 _treeBuilder.AppendLine(line);
-                var subTreeLines = _subtrees[subTreeKey].Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                var subTreeLines = SubTrees[subTreeKey].Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var subtreeLine in subTreeLines)
                 {
-                    ReadLine(subtreeLine, level + 1);
+                    ReadLine(subtreeLine, addLevels + level + 1);
                 }
             }
             else
             {
-                for (var k = 0; k <= addLevels; k++)
+                for (var k = 0; k < addLevels; k++)
                 {
                     _treeBuilder.Append("|   ");
                 }

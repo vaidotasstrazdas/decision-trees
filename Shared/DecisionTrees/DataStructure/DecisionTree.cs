@@ -26,9 +26,8 @@ namespace Shared.DecisionTrees.DataStructure
         public void SaveDecisionTree(string rawTree)
         {
 
-            var parts = rawTree.Split(new[] { "Subtree " }, StringSplitOptions.None);
-            _decisionTreeReader.ReadSubTrees(parts);
-            rawTree = _decisionTreeReader.NormalizeTree(parts[0]);
+            _decisionTreeReader.ReadSubTrees(rawTree);
+            rawTree = _decisionTreeReader.NormalizeTree(rawTree);
 
             var lines = rawTree.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
