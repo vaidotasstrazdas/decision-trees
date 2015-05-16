@@ -37,44 +37,48 @@ namespace Implementation.ForexDataPreparation
                 return;
             }
 
-            Console.Write("Enter month: ");
-            var month = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(month))
+            Console.Write("Enter months: ");
+            var monthsRaw = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(monthsRaw))
             {
                 Console.WriteLine("Wrong month.");
                 return;
             }
+            var months = monthsRaw.Split(',');
 
-            Console.WriteLine("Configuration Set: {0},{1},{2}", currencyPair, year, month);
-
-            var periods = new List<int> { 3600, 7200, 21600, 43200, 86400 };
-            var forexInputPath = Path.Combine(ConfigurationManager.AppSettings["ForexDataInputPath"], currencyPair, year, string.Format("EURUSD-2014-{0}.csv", month));
-            var forexOutputPath = Path.Combine(ConfigurationManager.AppSettings["ForexDataOutputPath"], currencyPair, year, month);
-
-            if (!Directory.Exists(forexOutputPath))
+            foreach (var month in months)
             {
-                Directory.CreateDirectory(forexOutputPath);
-            }
+                Console.WriteLine("Configuration Set: {0},{1},{2}", currencyPair, year, month);
 
-            Console.WriteLine("Application started.");
-            Console.WriteLine("Forex Input Path Now: {0}", forexInputPath);
+                var periods = new List<int> { 300, 600, 900, 1800, 21600 };
+                var forexInputPath = Path.Combine(ConfigurationManager.AppSettings["ForexDataInputPath"], currencyPair, year, string.Format("EURUSD-2014-{0}.csv", month));
+                var forexOutputPath = Path.Combine(ConfigurationManager.AppSettings["ForexDataOutputPath"], currencyPair, year, month);
 
-            Console.WriteLine("Reading Forex CSV");
+                if (!Directory.Exists(forexOutputPath))
+                {
+                    Directory.CreateDirectory(forexOutputPath);
+                }
 
-            _forexService.ReadCsv(forexInputPath);
+                Console.WriteLine("Application started.");
+                Console.WriteLine("Forex Input Path Now: {0}", forexInputPath);
 
-            Console.WriteLine("CSV File Read successfully!");
-            Console.WriteLine("Starting to prepare Forex trees.");
+                Console.WriteLine("Reading Forex CSV");
 
-            foreach (var period in periods)
-            {
-                Console.WriteLine("Chosen period: {0}s", period);
-                Console.WriteLine("Preparing data for selected period.");
-                var data = _forexService.PrepareData(period);
-                Console.WriteLine("Data for selected period prepared.");
-                Console.WriteLine("Saving data for selected period.");
-                _forexService.SaveForexData(data, period, forexOutputPath);
-                Console.WriteLine("Data saved successfully for selected period.");
+                _forexService.ReadCsv(forexInputPath);
+
+                Console.WriteLine("CSV File Read successfully!");
+                Console.WriteLine("Starting to prepare Forex trees.");
+
+                foreach (var period in periods)
+                {
+                    Console.WriteLine("Chosen period: {0}s", period);
+                    Console.WriteLine("Preparing data for selected period.");
+                    var data = _forexService.PrepareData(period);
+                    Console.WriteLine("Data for selected period prepared.");
+                    Console.WriteLine("Saving data for selected period.");
+                    _forexService.SaveForexData(data, period, forexOutputPath);
+                    Console.WriteLine("Data saved successfully for selected period.");
+                }
 
             }
 

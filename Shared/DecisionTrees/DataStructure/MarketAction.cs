@@ -1,4 +1,4 @@
-﻿namespace Bridge.IBLL.Data.Base
+﻿namespace Shared.DecisionTrees.DataStructure
 {
     public enum MarketAction
     {

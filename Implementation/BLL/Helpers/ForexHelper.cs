@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
 using Bridge.IBLL.Data;
-using Bridge.IBLL.Data.Base;
 using Bridge.IDLL.Data;
+using Shared.DecisionTrees.DataStructure;
 
 namespace Implementation.BLL.Helpers
 {
@@ -39,7 +39,7 @@ namespace Implementation.BLL.Helpers
 
                 BidChange = options.PreviousBid < 0.0 ? 0.0 : MathHelpers.PreservePrecision(record.Bid / options.PreviousBid - 1),
                 AskChange = options.PreviousAsk < 0.0 ? 0.0 : MathHelpers.PreservePrecision(record.Ask / options.PreviousAsk - 1),
-                SpreadChange = options.PreviousSpread > 0.0 ? 0.0 : MathHelpers.PreservePrecision(spread / options.PreviousSpread - 1),
+                SpreadChange = options.PreviousSpread >= 0.0 ? 0.0 : MathHelpers.PreservePrecision(spread / options.PreviousSpread - 1),
 
                 BidStandardDeviation = MathHelpers.PreservePrecision(Math.Sqrt(options.BidVariance)),
                 AskStandardDeviation = MathHelpers.PreservePrecision(Math.Sqrt(options.AskVariance)),

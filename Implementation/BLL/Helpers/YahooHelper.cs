@@ -1,11 +1,10 @@
 ﻿#region Usings
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 using Bridge.IBLL.Data;
-using Bridge.IBLL.Data.Base;
 using Bridge.IDLL.Data;
+using Shared.DecisionTrees.DataStructure;
 
 #endregion
 

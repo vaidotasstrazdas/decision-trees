@@ -7,6 +7,9 @@ using Bridge.IDLL.Interfaces;
 using Implementation.BLL;
 using Implementation.DLL;
 using Implementation.DLL.RepositoryBase;
+using Shared.DecisionTrees;
+using Shared.DecisionTrees.Interfaces;
+
 #endregion
 
 namespace Bridge.Infrastructure
@@ -19,6 +22,10 @@ namespace Bridge.Infrastructure
         public static void Register()
         {
             Builder = new ContainerBuilder();
+
+            Builder
+                .RegisterType<DecisionTreeReader>()
+                .As<IDecisionTreeReader>();
 
             Builder
                 .RegisterType<YahooService>()

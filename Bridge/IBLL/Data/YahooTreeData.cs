@@ -1,4 +1,4 @@
-﻿using Bridge.IBLL.Data.Base;
+﻿using Shared.DecisionTrees.DataStructure;
 
 namespace Bridge.IBLL.Data
 {

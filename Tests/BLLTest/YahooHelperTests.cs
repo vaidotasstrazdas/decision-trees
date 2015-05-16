@@ -8,9 +8,10 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Bridge.IBLL.Data;
-using Bridge.IBLL.Data.Base;
 using Bridge.IDLL.Data;
 using Implementation.BLL.Helpers;
+using Shared.DecisionTrees.DataStructure;
+
 #endregion
 
 namespace Tests.BLLTest

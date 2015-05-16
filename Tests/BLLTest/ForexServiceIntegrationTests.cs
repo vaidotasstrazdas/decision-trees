@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Bridge.IBLL.Data;
-using Bridge.IBLL.Data.Base;
 using Bridge.IDLL.Interfaces;
 using Implementation.BLL;
 using Implementation.BLL.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Shared.DecisionTrees.DataStructure;
 using Tests.BLLTest.DataBuilders;
 #endregion
 
