@@ -39,12 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classifier.cs" />
     <Compile Include="DataStructure\DecisionTree.cs" />
     <Compile Include="DataStructure\DecisionTreeAlgorithm.cs" />
     <Compile Include="DataStructure\MarketAction.cs" />
     <Compile Include="DataStructure\RelationType.cs" />
     <Compile Include="DataStructure\Rule.cs" />
     <Compile Include="DecisionTreeReader.cs" />
+    <Compile Include="Interfaces\IClassifier.cs" />
+    <Compile Include="Interfaces\IDecisionTree.cs" />
     <Compile Include="Interfaces\IDecisionTreeReader.cs" />
     <Compile Include="Interfaces\IRuleBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

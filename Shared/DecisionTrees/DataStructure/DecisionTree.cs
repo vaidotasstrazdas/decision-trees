@@ -1,39 +1,55 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.Collections.Generic;
 using Shared.DecisionTrees.Interfaces;
+#endregion
 
 namespace Shared.DecisionTrees.DataStructure
 {
-    public class DecisionTree<TRecord>
+    public class DecisionTree<TRecord> : IDecisionTree<TRecord>
     {
+
+        #region Private Fields
         private readonly IDecisionTreeReader _decisionTreeReader;
         private readonly IRuleBuilder _ruleBuilder;
+        private readonly IClassifier<TRecord> _classifier;
+        #endregion
 
-        private Dictionary<string, double> _records;
-        public Rule Root { get; private set; }
-
+        #region Constructors and Destructors
         public DecisionTree(
             IDecisionTreeReader decisionTreeReader,
-            IRuleBuilder ruleBuilder)
+            IRuleBuilder ruleBuilder,
+            IClassifier<TRecord> classifier)
         {
             _decisionTreeReader = decisionTreeReader;
             _ruleBuilder = ruleBuilder;
+            _classifier = classifier;
             Root = new Rule();
-            _records = new Dictionary<string, double>();
-            SetRecord();
+        }
+        #endregion
+
+        #region Implemented Interfaces
+
+        #region IDecisionTree
+        public Rule Root { get; private set; }
+
+        public MarketAction ClassifyRecord(TRecord record)
+        {
+            return _classifier.Classify(record, Root);
         }
 
         public void SaveDecisionTree(string rawTree)
         {
 
             _decisionTreeReader.ReadSubTrees(rawTree);
+            rawTree = _decisionTreeReader.NormalizeTreeSource(rawTree);
             rawTree = _decisionTreeReader.NormalizeTree(rawTree);
 
             var lines = rawTree.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
             var parents = new Dictionary<int, Rule> { {0, Root} };
 
-            var to = lines.Length - 1;
+            var to = lines.Length;
             for (var i = 0; i < to; i++)
             {
                 var line = lines[i];
@@ -52,23 +68,9 @@ namespace Shared.DecisionTrees.DataStructure
             }
 
         }
+        #endregion
 
-        private void PrepareRecord(TRecord record)
-        {
-            foreach (var key in _records.Keys)
-            {
-                _records[key] = Convert.ToDouble(typeof(TRecord).GetProperty(key).GetValue(record, null));
-            }
-        }
-
-        private void SetRecord()
-        {
-            var type = typeof (TRecord);
-            foreach (var property in type.GetProperties())
-            {
-                _records[property.Name] = 0.0;
-            }
-        }
+        #endregion
 
     }
 }
