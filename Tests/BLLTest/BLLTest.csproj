@@ -58,10 +58,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DataBuilders\ForexRecordsBuilder.cs" />
+    <Compile Include="DataBuilders\ListOfStatisticsRecords.cs" />
     <Compile Include="ForexHelperTests.cs" />
     <Compile Include="ForexServiceIntegrationTests.cs" />
     <Compile Include="ForexServiceTests.cs" />
     <Compile Include="MathHelpersTests.cs" />
+    <Compile Include="StatisticsServiceTests.cs" />
     <Compile Include="YahooHelperTests.cs" />
     <Compile Include="YahooServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -44,7 +44,7 @@ namespace Tests.BLLTest
 
         #region TestSuite
 
-        #region PrepareData Tests
+        #region CalculateStatistics Tests
 
         #region PrepareData_Split1800Provided_BuyAndSellQuantityMustBeTheSame
         [TestMethod]

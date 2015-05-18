@@ -56,6 +56,7 @@
     <Compile Include="RepositoryBase\CsvDataRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryBase\TreeDataRepositoryTests.cs" />
+    <Compile Include="StatisticsResultsRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Implementation\DLL\DLL.csproj">

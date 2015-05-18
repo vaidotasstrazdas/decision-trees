@@ -85,7 +85,7 @@ namespace Tests.BLLTest
 
         #endregion
 
-        #region PrepareData Tests
+        #region CalculateStatistics Tests
 
         #region PrepareData_Split1800Provided_ShouldPreserveAllRecords
         [TestMethod]

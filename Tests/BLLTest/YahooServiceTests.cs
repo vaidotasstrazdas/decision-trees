@@ -92,7 +92,7 @@ namespace Tests.BLLTest
 
         #endregion
 
-        #region PrepareData Tests
+        #region CalculateStatistics Tests
 
         #region PrepareData_ShouldGetCorrectResultsCount
         [TestMethod]

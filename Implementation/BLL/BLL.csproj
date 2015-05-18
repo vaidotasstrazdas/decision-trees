@@ -45,6 +45,7 @@
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\YahooHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatisticsService.cs" />
     <Compile Include="YahooService.cs" />
   </ItemGroup>
   <ItemGroup>
