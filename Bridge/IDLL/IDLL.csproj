@@ -40,12 +40,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ForexRecord.cs" />
+    <Compile Include="Data\HistogramResult.cs" />
     <Compile Include="Data\StatisticsRecord.cs" />
     <Compile Include="Data\StatisticsResult.cs" />
     <Compile Include="Data\YahooRecord.cs" />
     <Compile Include="Exceptions\DalException.cs" />
+    <Compile Include="Interfaces\Base\IResultsRepository.cs" />
     <Compile Include="Interfaces\ICsvDataRepository.cs" />
     <Compile Include="Interfaces\IForexCsvRepository.cs" />
+    <Compile Include="Interfaces\IHistogramResultsRepository.cs" />
     <Compile Include="Interfaces\IStatisticsResultsRepository.cs" />
     <Compile Include="Interfaces\ITreeDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

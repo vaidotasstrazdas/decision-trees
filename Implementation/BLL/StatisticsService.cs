@@ -6,11 +6,13 @@ using Bridge.IBLL.Interfaces;
 using Bridge.IDLL.Data;
 using Bridge.IDLL.Exceptions;
 using Bridge.IDLL.Interfaces;
+using Implementation.BLL.Base;
+
 #endregion
 
 namespace Implementation.BLL
 {
-    public class StatisticsService : IStatisticsService
+    public class StatisticsService : StatisticsBase, IStatisticsService
     {
 
         #region Private Fields
@@ -22,10 +24,9 @@ namespace Implementation.BLL
         public StatisticsService(
             ICsvDataRepository<StatisticsRecord> statistiCsvDataRepository,
             IStatisticsResultsRepository statisticsResultsRepository)
+            : base(statistiCsvDataRepository)
         {
-            _statistiCsvDataRepository = statistiCsvDataRepository;
             _statisticsResultsRepository = statisticsResultsRepository;
-            StatisticsSequence = new List<StatisticsSequenceDto>();
         }
         #endregion
 
@@ -33,44 +34,6 @@ namespace Implementation.BLL
 
         #region IStatisticsService
         public string BluePrint { get; set; }
-        public List<StatisticsSequenceDto> StatisticsSequence { get; private set; }
-
-        public void ReadStatisticsData(string path)
-        {
-            try
-            {
-                _statistiCsvDataRepository.LoadData(path);
-            }
-            catch (DalException exception)
-            {
-                throw new BllException(string.Format("{0}: {1}", "Exception of DAL", exception.Message));
-            }
-
-            _statistiCsvDataRepository.NormalizeData();
-        }
-
-        public void PrepareData()
-        {
-            var lines = _statistiCsvDataRepository.CsvLinesNormalized;
-            var linesCount = lines.Count;
-            if (linesCount%2 != 0)
-            {
-                throw new BllException("Incorrect number of elements in CSV file. Number of elements should be multiple of two.");
-            }
-
-            for (var i = 0; i < linesCount; i += 2)
-            {
-                var c45Record = lines[i];
-                var c50Record = lines[i + 1];
-                StatisticsSequence.Add(new StatisticsSequenceDto
-                {
-                    C45Errors = c45Record.Errors,
-                    C50Errors = c50Record.Errors,
-                    Cases = c45Record.Cases,
-                    Chunk = c45Record.Chunk
-                });
-            }
-        }
 
         public StatisticsDto CalculateStatistics()
         {
@@ -129,11 +92,6 @@ namespace Implementation.BLL
             {
                 throw new BllException(string.Format("{0}: {1}", "Exception of DAL", exception.Message));
             }
-        }
-
-        public void ResetSequence()
-        {
-            StatisticsSequence.Clear();
         }
 
         #endregion

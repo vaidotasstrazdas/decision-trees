@@ -8,18 +8,18 @@ using Implementation.DLL;
 namespace Tests.DLLTest
 {
     [TestClass]
-    public class StatisticsResultsRepositoryTests
+    public class HistogramResultsRepositoryTests
     {
 
         #region Private Fields
-        private StatisticsResultsRepository _repository;
+        private HistogramResultsRepository _repository;
         #endregion
 
         #region TestInitialize
         [TestInitialize]
         public void TestInitialize()
         {
-            _repository = new StatisticsResultsRepository();
+            _repository = new HistogramResultsRepository();
         }
         #endregion
 

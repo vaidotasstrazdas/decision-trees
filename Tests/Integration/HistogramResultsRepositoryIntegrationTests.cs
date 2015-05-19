@@ -2,7 +2,9 @@
 using System.Configuration;
 using System.IO;
 using System.Text;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using Bridge.IDLL.Data;
 using Implementation.DLL;
 #endregion
@@ -10,18 +12,18 @@ using Implementation.DLL;
 namespace Tests.Integration
 {
     [TestClass]
-    public class StatisticsResultsRepositoryIntegrationTests
+    public class HistogramResultsRepositoryIntegrationTests
     {
 
         #region Private Fields
-        private StatisticsResultsRepository _repository;
+        private HistogramResultsRepository _repository;
         #endregion
 
         #region TestInitialize
         [TestInitialize]
         public void TestInitialize()
         {
-            _repository = new StatisticsResultsRepository();
+            _repository = new HistogramResultsRepository();
         }
         #endregion
 
@@ -29,21 +31,21 @@ namespace Tests.Integration
 
         #region Add and Save Tests
 
-        #region AddThreeElementsAndSaveThem_StatisticsResult
+        #region AddThreeElementsAndSaveThem_HistogramResult
         [TestMethod]
         [TestCategory("Integration")]
-        public void AddThreeElementsAndSaveThem_StatisticsResult()
+        public void AddThreeElementsAndSaveThem_HistogramResult()
         {
             var resultsFilePath = Path.Combine(ConfigurationManager.AppSettings["TestDataDirectory"], "StatisticsResults.csv");
             var builder = new StringBuilder();
-            builder.AppendLine("BluePrint,C45Better,C50Better,Equal");
-            builder.AppendLine("test,123,321,10");
-            builder.AppendLine("test1,113,311,11");
-            builder.AppendLine("test2,153,351,15");
+            builder.AppendLine("BluePrint,C45Cases,C50Cases");
+            builder.AppendLine("0-0.00125,123,321");
+            builder.AppendLine("0.00125-0.0025,113,311");
+            builder.AppendLine("0.0025-0.00375,153,351");
 
-            _repository.Add(new StatisticsResult { BluePrint = "test", C45Better = 123, C50Better = 321, Equal = 10 });
-            _repository.Add(new StatisticsResult { BluePrint = "test1", C45Better = 113, C50Better = 311, Equal = 11 });
-            _repository.Add(new StatisticsResult { BluePrint = "test2", C45Better = 153, C50Better = 351, Equal = 15 });
+            _repository.Add(new HistogramResult { BluePrint = "0-0.00125", C45Cases = 123, C50Cases = 321 });
+            _repository.Add(new HistogramResult { BluePrint = "0.00125-0.0025", C45Cases = 113, C50Cases = 311 });
+            _repository.Add(new HistogramResult { BluePrint = "0.0025-0.00375", C45Cases = 153, C50Cases = 351 });
 
             _repository.Save(resultsFilePath);
 

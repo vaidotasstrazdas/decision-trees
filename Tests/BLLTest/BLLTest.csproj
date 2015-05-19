@@ -62,6 +62,7 @@
     <Compile Include="ForexHelperTests.cs" />
     <Compile Include="ForexServiceIntegrationTests.cs" />
     <Compile Include="ForexServiceTests.cs" />
+    <Compile Include="HistogramServiceTests.cs" />
     <Compile Include="MathHelpersTests.cs" />
     <Compile Include="StatisticsServiceTests.cs" />
     <Compile Include="YahooHelperTests.cs" />
