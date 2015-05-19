@@ -14,6 +14,7 @@ namespace Bridge.IBLL.Interfaces
         StatisticsDto CalculateStatistics();
         void AddToRepository(StatisticsDto statistics);
         void CommitToRepository(string path);
+        void ResetSequence();
 
     }
 }

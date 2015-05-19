@@ -36,6 +36,10 @@ namespace Bridge.Infrastructure
                 .As<IForexService>();
 
             Builder
+                .RegisterType<StatisticsService>()
+                .As<IStatisticsService>();
+
+            Builder
                 .RegisterType<TreeDataRepository<YahooTreeData>>()
                 .As<ITreeDataRepository<YahooTreeData>>();
 
@@ -46,6 +50,14 @@ namespace Bridge.Infrastructure
             Builder
                 .RegisterType<CsvDataRepository<YahooRecord>>()
                 .As<ICsvDataRepository<YahooRecord>>();
+
+            Builder
+                .RegisterType<CsvDataRepository<StatisticsRecord>>()
+                .As<ICsvDataRepository<StatisticsRecord>>();
+
+            Builder
+                .RegisterType<StatisticsResultsRepository>()
+                .As<IStatisticsResultsRepository>();
 
             Builder
                 .RegisterType<ForexCsvRepository>()

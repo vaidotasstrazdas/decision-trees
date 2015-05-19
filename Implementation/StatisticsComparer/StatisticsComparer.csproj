@@ -36,6 +36,7 @@
       <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,12 +49,17 @@
     <Compile Include="IApplication.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatisticsComparisonHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Bridge\IBLL\IBLL.csproj">
+      <Project>{CE2D0678-D88B-4023-9F76-9455694656B3}</Project>
+      <Name>IBLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Bridge\Infrastructure\Infrastructure.csproj">
       <Project>{E38A7B28-2987-4C51-8C28-30A5DD8C993F}</Project>
       <Name>Infrastructure</Name>

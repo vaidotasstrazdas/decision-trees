@@ -130,6 +130,12 @@ namespace Implementation.BLL
                 throw new BllException(string.Format("{0}: {1}", "Exception of DAL", exception.Message));
             }
         }
+
+        public void ResetSequence()
+        {
+            StatisticsSequence.Clear();
+        }
+
         #endregion
 
         #endregion

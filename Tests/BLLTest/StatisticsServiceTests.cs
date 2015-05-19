@@ -310,6 +310,21 @@ namespace Tests.BLLTest
 
         #endregion
 
+        #region ResetSequence Tests
+
+        #region ResetSequence_StatisticsSequenceShouldBeEmpty
+        [TestMethod]
+        public void ResetSequence_StatisticsSequenceShouldBeEmpty()
+        {
+            _service.PrepareData();
+            _service.ResetSequence();
+
+            Assert.AreEqual(0, _service.StatisticsSequence.Count);
+        }
+        #endregion
+
+        #endregion
+
         #endregion
 
     }
