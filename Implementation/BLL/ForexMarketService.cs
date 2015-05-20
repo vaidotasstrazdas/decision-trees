@@ -32,10 +32,13 @@ namespace Implementation.BLL
 
         #region Implemented Interfaces
 
-        #region IForexMarketService
+        #region IForexBaseService
         public string Period { get; set; }
         public int StartingMonth { get; set; }
         public int StartingChunk { get; set; }
+        #endregion
+
+        #region IForexMarketService
 
         public void SetForexTreesPath(string forexTreesPath)
         {

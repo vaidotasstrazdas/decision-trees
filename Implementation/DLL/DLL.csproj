@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DecisionTreesRepository.cs" />
     <Compile Include="ForexCsvRepository.cs" />
     <Compile Include="ForexMarketPathRepository.cs" />
     <Compile Include="HistogramResultsRepository.cs" />

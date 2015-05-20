@@ -1,15 +1,12 @@
 ﻿#region Usings
 using Bridge.IBLL.Data;
+using Bridge.IBLL.Interfaces.Base;
 #endregion
 
 namespace Bridge.IBLL.Interfaces
 {
-    public interface IForexMarketService
+    public interface IForexMarketService : IForexBaseService
     {
-
-        string Period { get; set; }
-        int StartingMonth { get; set; }
-        int StartingChunk { get; set; }
 
         bool IsDone();
         ForexTreeData NextRecord();

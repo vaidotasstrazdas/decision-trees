@@ -50,9 +50,11 @@
     <Compile Include="Data\YahooNormalized.cs" />
     <Compile Include="Data\YahooTreeData.cs" />
     <Compile Include="Exceptions\BllException.cs" />
+    <Compile Include="Interfaces\Base\IForexBaseService.cs" />
     <Compile Include="Interfaces\Base\IService.cs" />
     <Compile Include="Interfaces\IForexMarketService.cs" />
     <Compile Include="Interfaces\IForexService.cs" />
+    <Compile Include="Interfaces\IForexTradingAgentService.cs" />
     <Compile Include="Interfaces\IForexTradingService.cs" />
     <Compile Include="Interfaces\IHistogramService.cs" />
     <Compile Include="Interfaces\IStatisticsBase.cs" />
