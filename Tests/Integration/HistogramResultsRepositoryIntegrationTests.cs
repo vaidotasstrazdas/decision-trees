@@ -39,9 +39,9 @@ namespace Tests.Integration
             var resultsFilePath = Path.Combine(ConfigurationManager.AppSettings["TestDataDirectory"], "StatisticsResults.csv");
             var builder = new StringBuilder();
             builder.AppendLine("BluePrint,C45Cases,C50Cases");
-            builder.AppendLine("0-0.00125,123,321");
-            builder.AppendLine("0.00125-0.0025,113,311");
-            builder.AppendLine("0.0025-0.00375,153,351");
+            builder.AppendLine("\"0-0.00125\",123,321");
+            builder.AppendLine("\"0.00125-0.0025\",113,311");
+            builder.AppendLine("\"0.0025-0.00375\",153,351");
 
             _repository.Add(new HistogramResult { BluePrint = "0-0.00125", C45Cases = 123, C50Cases = 321 });
             _repository.Add(new HistogramResult { BluePrint = "0.00125-0.0025", C45Cases = 113, C50Cases = 311 });

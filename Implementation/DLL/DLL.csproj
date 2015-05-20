@@ -41,9 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ForexCsvRepository.cs" />
+    <Compile Include="ForexMarketPathRepository.cs" />
     <Compile Include="HistogramResultsRepository.cs" />
     <Compile Include="RepositoryBase\CsvDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryBase\ResultsRepository.cs" />
     <Compile Include="RepositoryBase\TreeDataRepository.cs" />
     <Compile Include="StatisticsResultsRepository.cs" />
   </ItemGroup>

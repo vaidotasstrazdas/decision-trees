@@ -1,36 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Bridge.IBLL.Interfaces;
 
 namespace StatisticsComparer
 {
-    public static class StatisticsComparisonHelper
+    public static class HistogramComparisonHelper
     {
 
-        public static IStatisticsService Service { get; set; }
-
-        public static void PrepareAllTime(List<string> files)
-        {
-            Service.BluePrint = "AllTime";
-
-            Console.WriteLine("Preparing all time statistics.");
-            foreach (var filePath in files)
-            {
-                Service.ReadStatisticsData(filePath);
-                Service.PrepareData();
-            }
-
-            var statistics = Service.CalculateStatistics();
-            Service.AddToRepository(statistics);
-            Console.WriteLine("Prepared.");
-            Service.ResetSequence();
-
-        }
+        public static IHistogramService Service { get; set; }
+        public static string HistogramPath { get; set; }
 
         public static void PreparePeriod(List<string> files, string period)
         {
-            Service.BluePrint = string.Format("Period{0}", period);
-            Console.WriteLine("Preparing period {0} statistics.", period);
+            var path = Path.Combine(HistogramPath, string.Format("Histogram_P{0}.csv", period));
+            Console.WriteLine("Preparing period {0} histogram.", period);
             foreach (var filePath in files)
             {
                 var periodOfFile = InfoHelper.GetPeriod(filePath);
@@ -44,15 +28,16 @@ namespace StatisticsComparer
 
             var statistics = Service.CalculateStatistics();
             Service.AddToRepository(statistics);
+            Service.CommitToRepository(path);
             Console.WriteLine("Prepared.");
-            Service.ResetSequence();
+            Service.Clear();
 
         }
 
         public static void PrepareMonth(List<string> files, string month)
         {
-            Service.BluePrint = string.Format("Month{0}", month);
-            Console.WriteLine("Preparing period {0} statistics.", month);
+            var path = Path.Combine(HistogramPath, string.Format("Histogram_M{0}.csv", month));
+            Console.WriteLine("Preparing period {0} histogram.", month);
             foreach (var filePath in files)
             {
                 var monthOfFile = InfoHelper.GetMonth(filePath);
@@ -66,15 +51,16 @@ namespace StatisticsComparer
 
             var statistics = Service.CalculateStatistics();
             Service.AddToRepository(statistics);
+            Service.CommitToRepository(path);
             Console.WriteLine("Prepared.");
-            Service.ResetSequence();
+            Service.Clear();
 
         }
 
         public static void PreparePeriodForMonth(List<string> files, string period, string month)
         {
-            Service.BluePrint = string.Format("Month{0}Period{1}", month, period);
-            Console.WriteLine("Preparing month {0} statistics for period {1}.", month, period);
+            var path = Path.Combine(HistogramPath, string.Format("Histogram_P{0}M{1}.csv", period, month));
+            Console.WriteLine("Preparing month {0} histogram for period {1}.", month, period);
             foreach (var filePath in files)
             {
                 var monthOfFile = InfoHelper.GetMonth(filePath);
@@ -89,8 +75,9 @@ namespace StatisticsComparer
 
             var statistics = Service.CalculateStatistics();
             Service.AddToRepository(statistics);
+            Service.CommitToRepository(path);
             Console.WriteLine("Prepared.");
-            Service.ResetSequence();
+            Service.Clear();
 
         }
 

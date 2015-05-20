@@ -35,13 +35,19 @@ namespace Implementation.DLL
 
             var builder = new StringBuilder();
             builder.AppendLine("BluePrint,C45Cases,C50Cases");
-            foreach (var line in _results.Select(result => string.Format("{0},{1},{2}", result.BluePrint, result.C45Cases, result.C50Cases)))
+            foreach (var line in _results.Select(result => string.Format("\"{0}\",{1},{2}", result.BluePrint, result.C45Cases, result.C50Cases)))
             {
                 builder.AppendLine(line);
             }
 
             File.WriteAllBytes(path, Encoding.UTF8.GetBytes(builder.ToString()));
         }
+
+        public void Clear()
+        {
+            _results.Clear();
+        }
+
         #endregion
 
         #endregion

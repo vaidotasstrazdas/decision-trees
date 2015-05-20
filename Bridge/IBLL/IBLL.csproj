@@ -51,6 +51,7 @@
     <Compile Include="Data\YahooTreeData.cs" />
     <Compile Include="Exceptions\BllException.cs" />
     <Compile Include="Interfaces\Base\IService.cs" />
+    <Compile Include="Interfaces\IForexMarketService.cs" />
     <Compile Include="Interfaces\IForexService.cs" />
     <Compile Include="Interfaces\IHistogramService.cs" />
     <Compile Include="Interfaces\IStatisticsBase.cs" />

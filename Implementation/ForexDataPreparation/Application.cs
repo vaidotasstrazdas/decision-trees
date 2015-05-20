@@ -60,7 +60,7 @@ namespace Implementation.ForexDataPreparation
                 }
 
                 Console.WriteLine("Application started.");
-                Console.WriteLine("Forex Input Path Now: {0}", forexInputPath);
+                Console.WriteLine("Forex Input ForexTreesPath Now: {0}", forexInputPath);
 
                 Console.WriteLine("Reading Forex CSV");
 

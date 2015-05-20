@@ -6,7 +6,7 @@ using Bridge.IBLL.Data;
 
 namespace Bridge.IBLL.Interfaces
 {
-    public interface IHistogramService
+    public interface IHistogramService : IStatisticsBase
     {
 
         double IntervalLength { get; set; }
@@ -14,6 +14,7 @@ namespace Bridge.IBLL.Interfaces
         List<HistogramDto> CalculateStatistics();
         void AddToRepository(List<HistogramDto> statistics);
         void CommitToRepository(string path);
+        void Clear();
 
     }
 }

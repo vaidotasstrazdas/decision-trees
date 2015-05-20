@@ -42,6 +42,11 @@ namespace Implementation.DLL
             File.WriteAllBytes(path, Encoding.UTF8.GetBytes(builder.ToString()));
 
         }
+
+        public void Clear()
+        {
+            _results.Clear();
+        }
         #endregion
 
         #endregion

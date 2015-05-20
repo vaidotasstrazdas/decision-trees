@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\StatisticsBase.cs" />
+    <Compile Include="ForexMarketService.cs" />
     <Compile Include="ForexService.cs" />
     <Compile Include="Helpers\ForexHelper.cs" />
     <Compile Include="Helpers\ForexTrackData.cs" />

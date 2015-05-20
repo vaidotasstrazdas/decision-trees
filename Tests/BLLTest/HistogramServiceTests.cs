@@ -217,7 +217,7 @@ namespace Tests.BLLTest
             var histogram = _service.CalculateStatistics();
             _service.AddToRepository(histogram);
 
-            var bluePrintsExpected = new List<string> { "0-0.0125", "0.0125-0.025", "0.025-0.0375", "0.05-0.0625" };
+            var bluePrintsExpected = new List<string> { "0,00%-1,25%", "1,25%-2,50%", "2,50%-3,75%", "5,00%-6,25%" };
             var bluePrintsActual = _histogramResults.Select(x => x.BluePrint).ToList();
 
             CollectionAssert.AreEqual(bluePrintsExpected, bluePrintsActual);

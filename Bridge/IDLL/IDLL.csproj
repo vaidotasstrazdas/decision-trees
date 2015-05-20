@@ -48,6 +48,7 @@
     <Compile Include="Interfaces\Base\IResultsRepository.cs" />
     <Compile Include="Interfaces\ICsvDataRepository.cs" />
     <Compile Include="Interfaces\IForexCsvRepository.cs" />
+    <Compile Include="Interfaces\IForexMarketPathRepository.cs" />
     <Compile Include="Interfaces\IHistogramResultsRepository.cs" />
     <Compile Include="Interfaces\IStatisticsResultsRepository.cs" />
     <Compile Include="Interfaces\ITreeDataRepository.cs" />

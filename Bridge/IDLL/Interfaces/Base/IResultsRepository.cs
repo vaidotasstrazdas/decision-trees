@@ -5,6 +5,7 @@
 
         void Add(TObject statistics);
         void Save(string path);
+        void Clear();
 
     }
 }

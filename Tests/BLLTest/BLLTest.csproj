@@ -60,6 +60,7 @@
     <Compile Include="DataBuilders\ForexRecordsBuilder.cs" />
     <Compile Include="DataBuilders\ListOfStatisticsRecords.cs" />
     <Compile Include="ForexHelperTests.cs" />
+    <Compile Include="ForexMarketServiceTests.cs" />
     <Compile Include="ForexServiceIntegrationTests.cs" />
     <Compile Include="ForexServiceTests.cs" />
     <Compile Include="HistogramServiceTests.cs" />

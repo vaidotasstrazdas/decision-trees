@@ -52,6 +52,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ForexCsvRepositoryTests.cs" />
+    <Compile Include="ForexMarketPathRepositoryTests.cs" />
     <Compile Include="HistogramResultsRepositoryTests.cs" />
     <Compile Include="Models\FakeDataModel.cs" />
     <Compile Include="RepositoryBase\CsvDataRepositoryTests.cs" />

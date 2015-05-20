@@ -1,4 +1,6 @@
 ﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -45,6 +47,7 @@ namespace Implementation.BLL
             {
                 var c45Record = records[i];
                 var c50Record = records[i + 1];
+
                 var c45IntervalFrom = GetIntervalFrom(c45Record);
                 var c50IntervalFrom = GetIntervalFrom(c50Record);
 
@@ -61,9 +64,11 @@ namespace Implementation.BLL
         {
             foreach (var histogramDto in statistics)
             {
+                var intervalFrom = string.Format("{0:0.00}%", histogramDto.IntervalFrom * 100);
+                var intervalTo = string.Format("{0:0.00}%", histogramDto.IntervalTo * 100);
                 _histogramResultsRepository.Add(new HistogramResult
                 {
-                    BluePrint = histogramDto.IntervalFrom + "-" + histogramDto.IntervalTo,
+                    BluePrint = (intervalFrom + "-" + intervalTo).Replace(".", ","),
                     C45Cases = histogramDto.C45Cases,
                     C50Cases = histogramDto.C50Cases
                 });
@@ -80,6 +85,12 @@ namespace Implementation.BLL
             {
                 throw new BllException(string.Format("{0}: {1}", "Exception of DAL", exception.Message));
             }
+        }
+
+        public void Clear()
+        {
+            ResetSequence();
+            _histogramResultsRepository.Clear();
         }
         #endregion
 
