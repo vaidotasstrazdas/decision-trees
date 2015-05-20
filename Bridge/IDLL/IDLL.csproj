@@ -51,8 +51,15 @@
     <Compile Include="Interfaces\IForexMarketPathRepository.cs" />
     <Compile Include="Interfaces\IHistogramResultsRepository.cs" />
     <Compile Include="Interfaces\IStatisticsResultsRepository.cs" />
+    <Compile Include="Interfaces\ITradingResultsRepository.cs" />
     <Compile Include="Interfaces\ITreeDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\DecisionTrees\DecisionTrees.csproj">
+      <Project>{886404E9-9EA5-4613-A134-0F607395FE59}</Project>
+      <Name>DecisionTrees</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

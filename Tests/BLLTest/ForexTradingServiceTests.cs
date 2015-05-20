@@ -5,18 +5,23 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Bridge.IBLL.Exceptions;
+using Bridge.IDLL.Exceptions;
+using Bridge.IDLL.Interfaces;
 using Implementation.BLL;
+using Moq;
 using Shared.DecisionTrees.DataStructure;
 using Tests.BLLTest.Helpers;
 #endregion
 
 namespace Tests.BLLTest
 {
+
     [TestClass]
     public class ForexTradingServiceTests
     {
 
         #region Private Fields
+        private Mock<ITradingResultsRepository> _tradingResultsRepositoryMock;
         private ForexTradingService _service;
         #endregion
 
@@ -24,7 +29,8 @@ namespace Tests.BLLTest
         [TestInitialize]
         public void TestInitialize()
         {
-            _service = new ForexTradingService();
+            _tradingResultsRepositoryMock = new Mock<ITradingResultsRepository>();
+            _service = new ForexTradingService(_tradingResultsRepositoryMock.Object);
             FakeTradingAgent.Service = _service;
         }
         #endregion
@@ -171,7 +177,57 @@ namespace Tests.BLLTest
 
         #endregion
 
+        #region AddToRepository Tests
+
+        #region AddToRepository_ShouldAddTradeLogRecords
+        [TestMethod]
+        public void AddToRepository()
+        {
+            FakeTradingAgent.TradeSequence();
+            
+            _service.AddToRepository();
+
+            foreach (var record in _service.TradeLog)
+            {
+                var logRecord = record;
+                _tradingResultsRepositoryMock
+                    .Verify(x => x.Add(logRecord), Times.Once());
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #region CommitToRepository Tests
+
+        #region CommitToRepository_DalExceptionThrown_ShouldThrowBllException
+        [TestMethod]
+        [ExpectedException(typeof(BllException), "Exception of DAL: Commit is forbidden.")]
+        public void CommitToRepository_DalExceptionThrown_ShouldThrowBllException()
+        {
+            _tradingResultsRepositoryMock
+                .Setup(x => x.Save(It.IsAny<string>()))
+                .Throws(new DalException("Commit is forbidden."));
+
+            _service.CommitToRepository(null);
+        }
+        #endregion
+
+        #region CommitToRepository_ShouldCallSave
+        [TestMethod]
+        public void CommitToRepository_ShouldCallSave()
+        {
+            _service.CommitToRepository("Test");
+
+            _tradingResultsRepositoryMock
+                .Verify(x => x.Save("Test"), Times.Once());
+        }
+        #endregion
+
+        #endregion
+
         #endregion
 
     }
+
 }

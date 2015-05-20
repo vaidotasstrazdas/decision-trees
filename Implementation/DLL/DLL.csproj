@@ -48,11 +48,16 @@
     <Compile Include="RepositoryBase\ResultsRepository.cs" />
     <Compile Include="RepositoryBase\TreeDataRepository.cs" />
     <Compile Include="StatisticsResultsRepository.cs" />
+    <Compile Include="TradingResultsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Bridge\IDLL\IDLL.csproj">
       <Project>{A0F9650A-E365-4D50-AB41-9F2184F891F3}</Project>
       <Name>IDLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shared\DecisionTrees\DecisionTrees.csproj">
+      <Project>{886404E9-9EA5-4613-A134-0F607395FE59}</Project>
+      <Name>DecisionTrees</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -14,6 +14,9 @@ namespace Bridge.IBLL.Interfaces
         List<TradeLogRecord> TradeLog { get; }
 
         void PlaceBid(ForexTreeData record, MarketAction action);
+        void AddToRepository();
+        void CommitToRepository(string path);
+        void Clear();
 
     }
 }

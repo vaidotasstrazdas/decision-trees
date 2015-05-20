@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Bridge.IBLL.Data;
 using Bridge.IBLL.Exceptions;
 using Bridge.IBLL.Interfaces;
+using Bridge.IDLL.Exceptions;
+using Bridge.IDLL.Interfaces;
 using Implementation.BLL.Helpers;
 using Shared.DecisionTrees.DataStructure;
 #endregion
@@ -13,9 +15,14 @@ namespace Implementation.BLL
     public class ForexTradingService : IForexTradingService
     {
 
+        #region Private Fields
+        private readonly ITradingResultsRepository _tradingResultsRepository;
+        #endregion
+
         #region Constructors and Destructors
-        public ForexTradingService()
+        public ForexTradingService(ITradingResultsRepository tradingResultsRepository)
         {
+            _tradingResultsRepository = tradingResultsRepository;
             BuyQuantities = new List<double>();
             Profits = new List<double>();
             TradeLog = new List<TradeLogRecord>();
@@ -50,6 +57,32 @@ namespace Implementation.BLL
                     throw new BllException("Incorrect market action.");
             }
         }
+
+        public void AddToRepository()
+        {
+            foreach (var logRecord in TradeLog)
+            {
+                _tradingResultsRepository.Add(logRecord);
+            }
+        }
+
+        public void CommitToRepository(string path)
+        {
+            try
+            {
+                _tradingResultsRepository.Save(path);
+            }
+            catch (DalException exception)
+            {
+                throw new BllException(string.Format("{0}: {1}", "Exception of DAL", exception.Message));
+            }
+        }
+
+        public void Clear()
+        {
+            _tradingResultsRepository.Clear();
+        }
+
         #endregion
 
         #endregion
