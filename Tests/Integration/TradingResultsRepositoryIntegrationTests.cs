@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region Usings
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Bridge.IDLL.Data;
-using Implementation.DLL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using Implementation.DLL;
 using Shared.DecisionTrees.DataStructure;
+#endregion
 
 namespace Tests.Integration
 {
@@ -32,10 +30,10 @@ namespace Tests.Integration
 
         #region Add and Save Tests
 
-        #region AddThreeElementsAndSaveThem_HistogramResult
+        #region AddFourElementsAndSaveThem_TradingResults
         [TestMethod]
         [TestCategory("Integration")]
-        public void AddThreeElementsAndSaveThem_HistogramResult()
+        public void AddFourElementsAndSaveThem_TradingResults()
         {
             var resultsFilePath = Path.Combine(ConfigurationManager.AppSettings["TestDataDirectory"], "TradingResults.csv");
             var builder = new StringBuilder();
