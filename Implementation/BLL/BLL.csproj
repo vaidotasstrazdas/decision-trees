@@ -42,6 +42,7 @@
     <Compile Include="Base\StatisticsBase.cs" />
     <Compile Include="ForexMarketService.cs" />
     <Compile Include="ForexService.cs" />
+    <Compile Include="ForexTradingService.cs" />
     <Compile Include="Helpers\ForexHelper.cs" />
     <Compile Include="Helpers\ForexTrackData.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />

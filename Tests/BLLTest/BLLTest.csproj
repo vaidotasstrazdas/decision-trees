@@ -63,6 +63,8 @@
     <Compile Include="ForexMarketServiceTests.cs" />
     <Compile Include="ForexServiceIntegrationTests.cs" />
     <Compile Include="ForexServiceTests.cs" />
+    <Compile Include="ForexTradingServiceTests.cs" />
+    <Compile Include="Helpers\FakeTradingAgent.cs" />
     <Compile Include="HistogramServiceTests.cs" />
     <Compile Include="MathHelpersTests.cs" />
     <Compile Include="StatisticsServiceTests.cs" />

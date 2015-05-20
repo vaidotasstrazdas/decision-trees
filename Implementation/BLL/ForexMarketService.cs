@@ -36,7 +36,6 @@ namespace Implementation.BLL
         public string Period { get; set; }
         public int StartingMonth { get; set; }
         public int StartingChunk { get; set; }
-        public DecisionTreeAlgorithm Algorithm { get; set; }
 
         public void SetForexTreesPath(string forexTreesPath)
         {

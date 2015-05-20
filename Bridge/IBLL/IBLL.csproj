@@ -53,6 +53,7 @@
     <Compile Include="Interfaces\Base\IService.cs" />
     <Compile Include="Interfaces\IForexMarketService.cs" />
     <Compile Include="Interfaces\IForexService.cs" />
+    <Compile Include="Interfaces\IForexTradingService.cs" />
     <Compile Include="Interfaces\IHistogramService.cs" />
     <Compile Include="Interfaces\IStatisticsBase.cs" />
     <Compile Include="Interfaces\IStatisticsService.cs" />

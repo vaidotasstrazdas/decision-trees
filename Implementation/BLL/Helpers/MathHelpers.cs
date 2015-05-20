@@ -15,5 +15,10 @@ namespace Implementation.BLL.Helpers
             return Math.Round(number * 100.0) / 100.0;
         }
 
+        public static double GreedyCurrencyPrecision(double number)
+        {
+            return Math.Floor(number * 100.0) / 100.0;
+        }
+
     }
 }

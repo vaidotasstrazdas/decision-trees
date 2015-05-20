@@ -45,6 +45,7 @@
     <Compile Include="DataStructure\MarketAction.cs" />
     <Compile Include="DataStructure\RelationType.cs" />
     <Compile Include="DataStructure\Rule.cs" />
+    <Compile Include="DataStructure\TradeLogRecord.cs" />
     <Compile Include="DecisionTreeReader.cs" />
     <Compile Include="Interfaces\IClassifier.cs" />
     <Compile Include="Interfaces\IDecisionTree.cs" />
