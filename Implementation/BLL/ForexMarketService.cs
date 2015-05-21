@@ -69,6 +69,14 @@ namespace Implementation.BLL
                 throw new BllException("No records left.");
             }
         }
+
+        public void Clear()
+        {
+            _forexMarketPathRepository.Paths.Clear();
+            _index = -1;
+            _pathIndex = 0;
+        }
+
         #endregion
 
         #endregion

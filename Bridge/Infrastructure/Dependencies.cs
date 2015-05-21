@@ -1,5 +1,6 @@
 ﻿#region Usings
 using Autofac;
+
 using Bridge.IBLL.Data;
 using Bridge.IBLL.Interfaces;
 using Bridge.IDLL.Data;
@@ -8,8 +9,8 @@ using Implementation.BLL;
 using Implementation.DLL;
 using Implementation.DLL.RepositoryBase;
 using Shared.DecisionTrees;
+using Shared.DecisionTrees.DataStructure;
 using Shared.DecisionTrees.Interfaces;
-
 #endregion
 
 namespace Bridge.Infrastructure
@@ -23,10 +24,7 @@ namespace Bridge.Infrastructure
         {
             Builder = new ContainerBuilder();
 
-            Builder
-                .RegisterType<DecisionTreeReader>()
-                .As<IDecisionTreeReader>();
-
+            #region Services
             Builder
                 .RegisterType<YahooService>()
                 .As<IYahooService>();
@@ -44,6 +42,20 @@ namespace Bridge.Infrastructure
                 .As<IHistogramService>();
 
             Builder
+                .RegisterType<ForexMarketService>()
+                .As<IForexMarketService>();
+
+            Builder
+                .RegisterType<ForexTradingAgentService>()
+                .As<IForexTradingAgentService>();
+
+            Builder
+                .RegisterType<ForexTradingService>()
+                .As<IForexTradingService>();
+            #endregion
+
+            #region Repositories
+            Builder
                 .RegisterType<TreeDataRepository<YahooTreeData>>()
                 .As<ITreeDataRepository<YahooTreeData>>();
 
@@ -60,8 +72,24 @@ namespace Bridge.Infrastructure
                 .As<ICsvDataRepository<StatisticsRecord>>();
 
             Builder
+                .RegisterType<CsvDataRepository<ForexTreeData>>()
+                .As<ICsvDataRepository<ForexTreeData>>();
+
+            Builder
                 .RegisterType<StatisticsResultsRepository>()
                 .As<IStatisticsResultsRepository>();
+
+            Builder
+                .RegisterType<TradingResultsRepository>()
+                .As<ITradingResultsRepository>();
+
+            Builder
+                .RegisterType<ForexMarketPathRepository>()
+                .As<IForexMarketPathRepository>();
+
+            Builder
+                .RegisterType<DecisionTreesRepository>()
+                .As<IDecisionTreesRepository>();
 
             Builder
                 .RegisterType<HistogramResultsRepository>()
@@ -70,6 +98,26 @@ namespace Bridge.Infrastructure
             Builder
                 .RegisterType<ForexCsvRepository>()
                 .As<IForexCsvRepository>();
+            #endregion
+
+            #region Decision Trees
+            Builder
+                .RegisterType<DecisionTreeReader>()
+                .As<IDecisionTreeReader>();
+
+            Builder
+                .RegisterType<DecisionTree<ForexTreeData>>()
+                .As<IDecisionTree<ForexTreeData>>();
+
+            Builder
+                .RegisterType<RuleBuilder>()
+                .As<IRuleBuilder>();
+
+            Builder
+                .RegisterType<Classifier<ForexTreeData>>()
+                .As<IClassifier<ForexTreeData>>();
+            #endregion
+
         }
 
     }

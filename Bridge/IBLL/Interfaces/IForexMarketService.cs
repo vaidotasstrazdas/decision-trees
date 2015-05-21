@@ -8,8 +8,10 @@ namespace Bridge.IBLL.Interfaces
     public interface IForexMarketService : IForexBaseService
     {
 
+        void SetForexTreesPath(string forexTreesPath);
         bool IsDone();
         ForexTreeData NextRecord();
+        void Clear();
 
     }
 }
