@@ -23,6 +23,7 @@ namespace ForexTradeModel
         private bool _quantitiesSet;
         private bool _burnedOut;
         private double _initialBalance;
+        private long _recordsProcessed;
 
         public TradingModel(
             IStatisticsService statisticsService,
@@ -121,6 +122,8 @@ namespace ForexTradeModel
         {
             CheckForInitialization();
 
+            var algorithm = Algorithm.ToString();
+            Console.WriteLine("Starting trading.");
             foreach (var sequenceElement in StatisticsSequences)
             {
                 var elementKey = sequenceElement.Key;
@@ -131,14 +134,18 @@ namespace ForexTradeModel
                 _forexMarketService.Period = period;
                 _forexTradingAgentService.StartingMonth = int.Parse(month);
                 _forexMarketService.StartingMonth = int.Parse(month);
+                Console.WriteLine("Chosen period {0} for month {1}", period, month);
                 foreach (var sequence in sequences)
                 {
+                    Console.WriteLine("    Chosen chunk {0}. Trading.", sequence.Chunk);
                     _forexTradingAgentService.StartingChunk = sequence.Chunk;
-                    _forexMarketService.StartingChunk = sequence.Chunk;
+                    _forexMarketService.StartingChunk = sequence.Chunk + 1;
                     _forexTradingAgentService.Initialize(FullForexTreesPath);
                     Balance = _initialBalance;
+                    _recordsProcessed = 0;
                     while (!_forexMarketService.IsDone())
                     {
+                        _recordsProcessed++;
                         var record = _forexMarketService.NextRecord();
                         var action = _forexTradingAgentService.ClassifyRecord(record);
 
@@ -156,9 +163,14 @@ namespace ForexTradeModel
                                 }
                                 break;
                             case MarketAction.Sell:
+                                if (_forexTradingService.BuyQuantities.Count < 1)
+                                {
+                                    _forexTradingService.PlaceBid(record, MarketAction.Hold);
+                                    break;
+                                }
                                 _forexTradingService.PlaceBid(record, action);
                                 Balance += _forexTradingService.BidSize + _forexTradingService.Profits.Last();
-                                if (Balance < _forexTradingService.BidSize)
+                                if (Balance < _forexTradingService.BidSize && _forexTradingService.BuyQuantities.Count == 0)
                                 {
                                     _burnedOut = true;
                                 }
@@ -168,28 +180,44 @@ namespace ForexTradeModel
                                 break;
                         }
 
-                        if (_burnedOut)
+                        if (_recordsProcessed % 100000 == 0)
                         {
-                            break;
+                            Console.WriteLine("        Records processed: {0}.", _recordsProcessed);
+                            Console.WriteLine("        Current balance: {0:0.00}.", Balance);
                         }
 
+                        if (!_burnedOut)
+                        {
+                            continue;
+                        }
+
+                        Console.WriteLine("        Burned out.");
+                        break;
                     }
 
                     if (_burnedOut)
                     {
                         Balance = _initialBalance;
                         _burnedOut = false;
-                        break;
                     }
 
+                    Console.WriteLine("    Adding to repository.");
                     _forexTradingService.AddToRepository();
+                    Console.WriteLine("    Added to repository.");
 
-                    var path = Path.Combine(FullForexTreesPath, "TradingResults", string.Format("P{0}M{1}CH{2}.csv", period, month, sequence.Chunk));
+                    var path = Path.Combine(FullForexTreesPath, "TradingResults", string.Format("P{0}M{1}CH{2}A{3}.csv", period, month, sequence.Chunk, algorithm));
 
+                    Console.WriteLine("    Commiting to repository.");
                     _forexTradingService.CommitToRepository(path);
+                    Console.WriteLine("    Commited to repository, i.e. Saved.");
+                    _forexTradingService.Clear();
 
+                    Console.WriteLine("    Clearing market data.");
                     _forexMarketService.Clear();
+                    Console.WriteLine("    Cleared market data.");
+                    Console.WriteLine("    Chunk {0} completed.", sequence.Chunk);
                 }
+                Console.WriteLine("Period {0} for month {1} completed.", period, month);
             }
 
         }

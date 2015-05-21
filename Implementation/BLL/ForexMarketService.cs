@@ -47,6 +47,10 @@ namespace Implementation.BLL
 
         public bool IsDone()
         {
+            if (_forexTreeCsvDataRepository.CsvLinesNormalized == null)
+            {
+                return false;
+            }
             return _pathIndex == _forexMarketPathRepository.Paths.Count &&
                    _index == _forexTreeCsvDataRepository.CsvLinesNormalized.Count;
         }
@@ -84,9 +88,12 @@ namespace Implementation.BLL
         #region Methods
         private void ReadNextChunk()
         {
-            if (_index < _forexTreeCsvDataRepository.CsvLinesNormalized.Count && _pathIndex != 0)
+            if (_forexTreeCsvDataRepository.CsvLinesNormalized != null)
             {
-                return;
+                if (_index < _forexTreeCsvDataRepository.CsvLinesNormalized.Count && _pathIndex != 0)
+                {
+                    return;
+                }
             }
 
             var path = _forexMarketPathRepository.Paths[_pathIndex++];

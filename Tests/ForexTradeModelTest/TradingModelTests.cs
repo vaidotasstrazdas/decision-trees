@@ -682,7 +682,7 @@ namespace Tests.ForexTradeModelTest
                                         let sequences = sequenceElement.Value
                                  from sequence in sequences
                                         let chunk = sequence.Chunk
-                                 select string.Format("ForexTrees\\EURUSD\\2014\\TradingResults\\P{0}M{1}CH{2}.csv", period, month, chunk))
+                                 select string.Format("ForexTrees\\EURUSD\\2014\\TradingResults\\P{0}M{1}CH{2}AC45.csv", period, month, chunk))
             {
                 var saveFilePath = path;
                 _forexTradingServiceMock

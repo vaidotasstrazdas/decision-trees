@@ -80,6 +80,9 @@ namespace Implementation.BLL
 
         public void Clear()
         {
+            Profits.Clear();
+            BuyQuantities.Clear();
+            TradeLog.Clear();
             _tradingResultsRepository.Clear();
         }
 

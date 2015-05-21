@@ -70,13 +70,21 @@ namespace Implementation.DLL.RepositoryBase
                 foreach (var property in recordObject.GetType().GetProperties())
                 {
                     var value = line[index++];
-                    property.SetValue(recordObject, Convert.ChangeType(value, property.PropertyType), null);
+                    property.SetValue(recordObject, ConvertValue(value, property.PropertyType), null);
                 }
                 CsvLinesNormalized.Add(recordObject);
             }
 
 
         }
+        #endregion
+
+        #region Methods
+        private static object ConvertValue(string value, Type propertyType)
+        {
+            return propertyType.IsEnum ? Enum.Parse(propertyType, value) : Convert.ChangeType(value, propertyType);
+        }
+
         #endregion
 
         #endregion
