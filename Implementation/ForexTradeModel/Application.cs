@@ -32,7 +32,7 @@ namespace ForexTradeModel
             Console.WriteLine("Prepared.");
 
             // Balance: 100000.0, Bid Size: 100.0, Margin Ratio: 0.02
-            _model.SetModelQuantities(100000.0, 100.0, 0.02);
+            _model.SetModelQuantities(100000.0, 100.0);
 
             Console.WriteLine("Starting to trade.");
             _model.Trade();

@@ -56,6 +56,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleFramework", "Shared\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForexTradeModelTest", "Tests\ForexTradeModelTest\ForexTradeModelTest.csproj", "{EE3CA47A-E8AC-4545-83DE-C693DF0357D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingStatistics", "Implementation\TradingStatistics\TradingStatistics.csproj", "{704587CD-7D6A-4909-AB53-9C63CAEC2DDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{EE3CA47A-E8AC-4545-83DE-C693DF0357D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE3CA47A-E8AC-4545-83DE-C693DF0357D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE3CA47A-E8AC-4545-83DE-C693DF0357D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{704587CD-7D6A-4909-AB53-9C63CAEC2DDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{704587CD-7D6A-4909-AB53-9C63CAEC2DDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{704587CD-7D6A-4909-AB53-9C63CAEC2DDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{704587CD-7D6A-4909-AB53-9C63CAEC2DDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -161,5 +167,6 @@ Global
 		{87A15E3A-433F-4689-88EA-8BB31EC1B1D0} = {70CB88B9-97DD-46ED-B907-823343301049}
 		{110F37E4-70FC-43C7-9238-E74E263271F6} = {6816457B-C3D1-4577-8533-D57ACE0758B5}
 		{EE3CA47A-E8AC-4545-83DE-C693DF0357D6} = {3A364453-AC5D-46F1-8764-BE09ED49E6A0}
+		{704587CD-7D6A-4909-AB53-9C63CAEC2DDD} = {70CB88B9-97DD-46ED-B907-823343301049}
 	EndGlobalSection
 EndGlobal

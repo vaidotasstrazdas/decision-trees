@@ -47,6 +47,7 @@
     <Compile Include="Data\HistogramDto.cs" />
     <Compile Include="Data\StatisticsDto.cs" />
     <Compile Include="Data\StatisticsSequenceDto.cs" />
+    <Compile Include="Data\TradeStatistics.cs" />
     <Compile Include="Data\YahooNormalized.cs" />
     <Compile Include="Data\YahooTreeData.cs" />
     <Compile Include="Exceptions\BllException.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Interfaces\IForexService.cs" />
     <Compile Include="Interfaces\IForexTradingAgentService.cs" />
     <Compile Include="Interfaces\IForexTradingService.cs" />
+    <Compile Include="Interfaces\IForexTradingStatisticsService.cs" />
     <Compile Include="Interfaces\IHistogramService.cs" />
     <Compile Include="Interfaces\IStatisticsBase.cs" />
     <Compile Include="Interfaces\IStatisticsService.cs" />

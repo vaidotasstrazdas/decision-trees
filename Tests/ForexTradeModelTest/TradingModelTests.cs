@@ -603,27 +603,6 @@ namespace Tests.ForexTradeModelTest
         }
         #endregion
 
-        #region Trade_ShouldInitializeForexMarketServiceWithCorrectStartingChunks
-        [TestMethod]
-        public void Trade_ShouldInitializeForexMarketServiceWithCorrectStartingChunks()
-        {
-            _model.Initialize("EURUSD", "2014", _periods, 500, string.Empty, "ForexTrees");
-            _model.PrepareForAlgorithm(DecisionTreeAlgorithm.C45);
-            _model.SetModelQuantities();
-            _model.Trade();
-
-            _forexMarketServiceMock
-                .VerifySet(x => x.StartingChunk = 4, Times.Exactly(48));
-
-            _forexMarketServiceMock
-                .VerifySet(x => x.StartingChunk = 2, Times.Exactly(48));
-
-            _forexMarketServiceMock
-                .VerifySet(x => x.StartingChunk = 0, Times.Exactly(48));
-
-        }
-        #endregion
-
         #region Trade_ShouldClearTradingInMarket
         [TestMethod]
         public void Trade_ShouldClearTradingInMarket()
@@ -702,58 +681,6 @@ namespace Tests.ForexTradeModelTest
 
 
             Assert.AreEqual(90000.0, _model.Balance);
-        }
-        #endregion
-
-        #region Trade_ShouldKeepTrackOfBalance_CorrectBalance
-        [TestMethod]
-        public void Trade_ShouldKeepTrackOfBalance_CorrectBalance()
-        {
-
-            var profits = new List<double> { 10.0 };
-
-            _forexTradingAgentServiceMock
-                .Setup(x => x.ClassifyRecord(It.IsAny<ForexTreeData>()))
-                .Returns<ForexTreeData>(x => profits.Count % 2 == 0 ? MarketAction.Sell : MarketAction.Buy)
-                .Callback(() => profits.Add(10.0));
-
-            _forexTradingServiceMock
-                .Setup(x => x.Profits)
-                .Returns(profits);
-
-            _model.Initialize("EURUSD", "2014", _periods, 500, string.Empty, "ForexTrees");
-            _model.PrepareForAlgorithm(DecisionTreeAlgorithm.C45);
-            _model.SetModelQuantities();
-            _model.Trade();
-
-            _forexTradingServiceMock
-                .Verify(x => x.PlaceBid(It.IsAny<ForexTreeData>(), MarketAction.Sell), Times.Exactly(360));
-        }
-        #endregion
-
-        #region Trade_ShouldKeepTrackOfBalance_ShouldBreakWhenBalanceIsLessThanBidSizeAfterSell
-        [TestMethod]
-        public void Trade_ShouldKeepTrackOfBalance_ShouldBreakWhenBalanceIsLessThanBidSizeAfterSell()
-        {
-
-            var profits = new List<double> { -100000.0 };
-
-            _forexTradingAgentServiceMock
-                .Setup(x => x.ClassifyRecord(It.IsAny<ForexTreeData>()))
-                .Returns<ForexTreeData>(x => profits.Count % 2 == 0 ? MarketAction.Sell : MarketAction.Buy)
-                .Callback(() => profits.Add(-100000.0));
-
-            _forexTradingServiceMock
-                .Setup(x => x.Profits)
-                .Returns(profits);
-
-            _model.Initialize("EURUSD", "2014", _periods, 500, string.Empty, "ForexTrees");
-            _model.PrepareForAlgorithm(DecisionTreeAlgorithm.C45);
-            _model.SetModelQuantities();
-            _model.Trade();
-
-            _forexTradingServiceMock
-                .Verify(x => x.PlaceBid(It.IsAny<ForexTreeData>(), MarketAction.Sell), Times.Exactly(60));
         }
         #endregion
 
